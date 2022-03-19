@@ -1,6 +1,6 @@
-# bot-dashboard
+# Announcement Bot Dashboard (frontend)
 
-This template should help get you started developing with Vue 3 in Vite.
+[Link to backend repository](https://github.com/bubbzDotDev/bot-dashboard-backend)
 
 ## Recommended IDE Setup
 
