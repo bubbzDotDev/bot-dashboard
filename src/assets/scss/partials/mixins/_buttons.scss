@@ -1,0 +1,18 @@
+@use '../colors' as *;
+
+// Buttons
+@mixin button {
+  background-color: $primary;
+  color: $primary-light;
+  border: none;
+  padding: 1rem;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 5px;
+  transition: 0.5s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $link-dark;
+  }
+}
