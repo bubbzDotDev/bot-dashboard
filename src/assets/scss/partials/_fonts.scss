@@ -1,0 +1,7 @@
+// Fonts
+@font-face { 
+	font-family: 'MyWebFont';
+	src:  url('@/assets/fonts/webfont.woff') format('woff'),
+        url('@/assets/fonts/webfont.woff2') format('woff2');
+	font-display: swap;
+}
