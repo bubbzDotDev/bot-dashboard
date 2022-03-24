@@ -1,9 +1,13 @@
-<script setup></script>
+<script setup>
+import { RouterLink } from "vue-router";
+</script>
 
 <template>
   <div class="sign-in-container">
     <span>SIGN IN WITH DISCORD</span>
-    <button>SIGN IN</button>
+    <RouterLink to="/dashboard">
+      <button>SIGN IN</button>
+    </RouterLink>
   </div>
 </template>
 
