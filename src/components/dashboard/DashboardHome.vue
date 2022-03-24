@@ -25,8 +25,8 @@ const guilds = [
     <div v-if="guilds.length">
       <h2>Your Server<span v-if="guilds.length > 1">s</span></h2>
       <div class="guild-card-container">
-        <div v-for="guild in guilds" :key="guild.id" class="guild-card">
-          <RouterLink :to="`/dashboard/${guild.id}`">
+        <div v-for="guild in guilds" :key="guild.id">
+          <RouterLink :to="`/dashboard/${guild.id}`" class="guild-card">
             <h3>{{ guild.name }}</h3>
             <img :src="guild.icon" alt="Server icon" height="32" width="32" />
           </RouterLink>
@@ -58,16 +58,9 @@ const guilds = [
   height: 85px;
   width: 100px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-
-  a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    height: 100%;
-  }
 
   h3 {
     margin: 0;

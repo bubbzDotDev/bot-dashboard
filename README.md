@@ -1,6 +1,7 @@
 # Announcement Bot Dashboard (frontend)
 
-[Link to backend repository](https://github.com/bubbzDotDev/bot-dashboard-backend)
+- [Link to API repository](https://github.com/bubbzDotDev/bot-dashboard-api)
+- [Link to Bot repository](https://github.com/bubbzDotDev/bot-dashboard-bot)
 
 ## Recommended IDE Setup
 

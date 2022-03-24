@@ -1,15 +1,25 @@
 <script setup>
-import { RouterLink } from "vue-router";
+import { ref } from "vue";
+import { RouterLink, useRoute } from "vue-router";
+
+const guildId = ref(null);
+const route = useRoute();
+guildId.value = route.params.id;
 </script>
 
 <template>
   <nav>
     <ul>
       <li>
-        <RouterLink to="/dashboard">Main</RouterLink>
+        <RouterLink to="/dashboard">Server List</RouterLink>
+      </li>
+      <li>
+        <RouterLink :to="`/dashboard/${guildId}`">Main</RouterLink>
       </li>
       <li>Embeds</li>
-      <li>Settings</li>
+      <li>
+        <RouterLink :to="`/dashboard/${guildId}/settings`">Settings</RouterLink>
+      </li>
     </ul>
   </nav>
 </template>
