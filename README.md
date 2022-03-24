@@ -1,4 +1,4 @@
-# Announcement Bot Dashboard (frontend)
+# Announcement Bot Dashboard (Frontend)
 
 - [Link to API repository](https://github.com/bubbzDotDev/bot-dashboard-api)
 - [Link to Bot repository](https://github.com/bubbzDotDev/bot-dashboard-bot)
