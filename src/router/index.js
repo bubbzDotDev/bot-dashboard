@@ -7,6 +7,10 @@ import DashboardView from "@/views/DashboardView.vue";
 import DashboardHome from "@/components/dashboard/DashboardHome.vue";
 import GuildView from "@/views/GuildView.vue";
 import GuildHome from "@/components/dashboard/guild/GuildHome.vue";
+import SettingsView from "@/views/SettingsView.vue";
+import SettingsHome from "@/components/dashboard/guild/settings/SettingsHome.vue";
+import SettingsPrefix from "@/components/dashboard/guild/settings/SettingsPrefix.vue";
+import SettingsWelcome from "@/components/dashboard/guild/settings/SettingsWelcome.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,6 +44,28 @@ const router = createRouter({
               name: "guild-home",
               path: "",
               component: GuildHome,
+            },
+            {
+              name: "guild-settings",
+              path: "settings",
+              component: SettingsView,
+              children: [
+                {
+                  name: "settings-home",
+                  path: "",
+                  component: SettingsHome,
+                },
+                {
+                  name: "settings-prefix",
+                  path: "prefix",
+                  component: SettingsPrefix,
+                },
+                {
+                  name: "settings-welcome",
+                  path: "welcome",
+                  component: SettingsWelcome,
+                },
+              ],
             },
           ],
         },
