@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink } from "vue-router";
-import SignIn from "@/components/misc/SignIn.vue";
+import SignIn from "@/components/auth/SignIn.vue";
 </script>
 
 <template>
