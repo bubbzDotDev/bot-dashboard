@@ -1,13 +1,13 @@
 <script setup>
-import { RouterLink } from "vue-router";
+const redirect = () => {
+  window.location.href = "http://localhost:3001/api/auth/login"; // Update for production
+};
 </script>
 
 <template>
   <div class="sign-in-container">
     <span>SIGN IN WITH DISCORD</span>
-    <RouterLink to="/dashboard">
-      <button>SIGN IN</button>
-    </RouterLink>
+    <button @click="redirect" type="button">SIGN IN</button>
   </div>
 </template>
 
