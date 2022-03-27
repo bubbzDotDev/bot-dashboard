@@ -3,14 +3,15 @@ import { ref } from "vue";
 import { RouterView } from "vue-router";
 import { useUserStore } from "@/stores/user";
 
+const user = ref({});
+const loading = ref();
+
 const userStore = useUserStore();
 userStore.fetchUserStatus();
 
-const loading = ref(false);
-loading.value = userStore.getLoading;
-
-const user = ref(null);
 user.value = userStore.getUser;
+
+loading.value = userStore.getLoading;
 
 console.log("user:", user.value);
 console.log("loading:", loading.value);

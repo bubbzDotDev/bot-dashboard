@@ -4,7 +4,7 @@ import { getAuthStatus } from "@/utils/api";
 export const useUserStore = defineStore({
   id: "user",
   state: () => ({
-    user: null,
+    user: {},
     loading: false,
   }),
   getters: {
@@ -17,11 +17,10 @@ export const useUserStore = defineStore({
       getAuthStatus()
         .then(({ data }) => {
           this.user = data;
+          this.loading = false;
         })
         .catch((err) => {
           console.log(err);
-        })
-        .finally(() => {
           this.loading = false;
         });
     },
