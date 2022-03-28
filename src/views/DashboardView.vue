@@ -1,16 +1,18 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onBeforeMount } from "vue";
 import { RouterView } from "vue-router";
 import { useUserStore } from "@/stores/user";
 
-const user = ref({});
-const loading = ref();
-
 const userStore = useUserStore();
-userStore.fetchUserStatus();
+
+const user = ref({});
+const loading = ref(false);
+
+onBeforeMount(async () => {
+  await userStore.fetchUserStatus();
+});
 
 user.value = userStore.getUser;
-
 loading.value = userStore.getLoading;
 
 console.log("user:", user.value);
