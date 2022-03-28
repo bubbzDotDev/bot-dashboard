@@ -17,10 +17,11 @@ export const useUserStore = defineStore({
       getAuthStatus()
         .then(({ data }) => {
           this.user = data;
-          this.loading = false;
         })
         .catch((err) => {
           console.log(err);
+        })
+        .finally(() => {
           this.loading = false;
         });
     },
