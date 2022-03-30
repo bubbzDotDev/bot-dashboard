@@ -1,17 +1,52 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onBeforeMount, watch } from "vue";
 import { RouterView } from "vue-router";
+import { useUserStore } from "@/stores/user";
 
-const loggedIn = ref(true);
+const userStore = useUserStore();
+
+const user = ref({});
+const loading = ref(false);
+
+onBeforeMount(async () => {
+  await userStore.fetchUserStatus();
+});
+
+user.value = userStore.getUser;
+loading.value = userStore.getLoading;
+
+watch(
+  () => userStore.getUser,
+  () => {
+    user.value = userStore.getUser;
+    console.log("user:", user.value);
+  }
+);
+
+watch(
+  () => userStore.getLoading,
+  () => {
+    loading.value = userStore.getLoading;
+    console.log("loading:", loading.value);
+  }
+);
+
+console.log("user:", user.value);
+console.log("loading:", loading.value);
 </script>
 
 <template>
   <main>
-    <div v-if="loggedIn">
-      <RouterView />
+    <div v-if="loading">
+      <h2>Loading...</h2>
     </div>
     <div v-else>
-      <h2>Not logged in.</h2>
+      <div v-if="user">
+        <RouterView />
+      </div>
+      <div v-else>
+        <h2>Not logged in.</h2>
+      </div>
     </div>
   </main>
 </template>
