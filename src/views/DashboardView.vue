@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onBeforeMount } from "vue";
+import { ref, onBeforeMount, watch } from "vue";
 import { RouterView } from "vue-router";
 import { useUserStore } from "@/stores/user";
 
@@ -14,6 +14,22 @@ onBeforeMount(async () => {
 
 user.value = userStore.getUser;
 loading.value = userStore.getLoading;
+
+watch(
+  () => userStore.getUser,
+  () => {
+    user.value = userStore.getUser;
+    console.log("user:", user.value);
+  }
+);
+
+watch(
+  () => userStore.getLoading,
+  () => {
+    loading.value = userStore.getLoading;
+    console.log("loading:", loading.value);
+  }
+);
 
 console.log("user:", user.value);
 console.log("loading:", loading.value);
