@@ -1,32 +1,20 @@
 <script setup>
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { useUserStore } from "@/stores/user";
+
+const userStore = useUserStore();
+
+const guilds = ref([]);
+guilds.value = userStore.getMutualGuilds;
 
 const guildId = ref(null);
-
-const guilds = [
-  {
-    id: "123",
-    name: "Server 1",
-    icon: new URL("../../assets/images/heart-32px.png", import.meta.url).href,
-  },
-  {
-    id: "124",
-    name: "Server 2",
-    icon: new URL("../../assets/images/heart-32px.png", import.meta.url).href,
-  },
-  {
-    id: "125",
-    name: "Server 3",
-    icon: new URL("../../assets/images/heart-32px.png", import.meta.url).href,
-  },
-];
 
 const route = useRoute();
 
 guildId.value = route.params.id;
 
-const matchingGuild = guilds.filter((guild) => {
+const matchingGuild = guilds.value.filter((guild) => {
   return guild.id === guildId.value;
 });
 
