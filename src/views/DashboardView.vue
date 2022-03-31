@@ -19,7 +19,6 @@ watch(
   () => userStore.getUser,
   () => {
     user.value = userStore.getUser;
-    console.log("user:", user.value);
   }
 );
 
@@ -27,12 +26,8 @@ watch(
   () => userStore.getLoading,
   () => {
     loading.value = userStore.getLoading;
-    console.log("loading:", loading.value);
   }
 );
-
-console.log("user:", user.value);
-console.log("loading:", loading.value);
 </script>
 
 <template>

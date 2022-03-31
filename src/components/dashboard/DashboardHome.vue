@@ -1,23 +1,34 @@
 <script setup>
+import { ref, onBeforeMount, watch } from "vue";
 import { RouterLink } from "vue-router";
+import { useUserStore } from "@/stores/user";
+import { getGuildIconURL } from "@/utils/helpers";
 
-const guilds = [
-  {
-    id: "123",
-    name: "Server 1",
-    icon: new URL("../../assets/images/heart-32px.png", import.meta.url).href,
-  },
-  {
-    id: "124",
-    name: "Server 2",
-    icon: new URL("../../assets/images/heart-32px.png", import.meta.url).href,
-  },
-  {
-    id: "125",
-    name: "Server 3",
-    icon: new URL("../../assets/images/heart-32px.png", import.meta.url).href,
-  },
-];
+const userStore = useUserStore();
+
+const guilds = ref([]);
+
+onBeforeMount(async () => {
+  await userStore.fetchMutualGuilds();
+});
+
+guilds.value = userStore.getMutualGuilds;
+
+watch(
+  () => userStore.getMutualGuilds,
+  () => {
+    guilds.value = userStore.getMutualGuilds;
+  }
+);
+
+const loading = ref(false);
+loading.value = userStore.getGuildsLoading;
+watch(
+  () => userStore.getGuildsLoading,
+  () => {
+    loading.value = userStore.getGuildsLoading;
+  }
+);
 </script>
 
 <template>
@@ -28,13 +39,20 @@ const guilds = [
         <div v-for="guild in guilds" :key="guild.id">
           <RouterLink :to="`/dashboard/${guild.id}`" class="guild-card">
             <h3>{{ guild.name }}</h3>
-            <img :src="guild.icon" alt="Server icon" height="32" width="32" />
+            <img
+              v-if="guild.icon"
+              :src="getGuildIconURL(guild)"
+              alt="Server icon"
+              height="32"
+              width="32"
+            />
           </RouterLink>
         </div>
       </div>
     </div>
     <div v-else>
-      <h2>
+      <h2 v-if="loading">Loading...</h2>
+      <h2 v-else>
         No servers yet. Create one on
         <a rel="noopener" href="https://discord.com/" target="_blank">Discord</a
         >!

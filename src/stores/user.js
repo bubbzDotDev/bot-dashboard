@@ -1,15 +1,19 @@
 import { defineStore } from "pinia";
-import { getAuthStatus } from "@/utils/api";
+import { getAuthStatus, getMutualGuilds } from "@/utils/api";
 
 export const useUserStore = defineStore({
   id: "user",
   state: () => ({
     user: {},
     loading: false,
+    mutualGuilds: [],
+    guildsLoading: false,
   }),
   getters: {
     getUser: (state) => state.user,
     getLoading: (state) => state.loading,
+    getMutualGuilds: (state) => state.mutualGuilds,
+    getGuildsLoading: (state) => state.guildsLoading,
   },
   actions: {
     fetchUserStatus() {
@@ -23,6 +27,19 @@ export const useUserStore = defineStore({
         })
         .finally(() => {
           this.loading = false;
+        });
+    },
+    fetchMutualGuilds() {
+      this.guildsLoading = true;
+      getMutualGuilds()
+        .then(({ data }) => {
+          this.mutualGuilds = data;
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          this.guildsLoading = false;
         });
     },
   },
