@@ -20,6 +20,15 @@ watch(
     guilds.value = userStore.getMutualGuilds;
   }
 );
+
+const loading = ref(false);
+loading.value = userStore.getGuildsLoading;
+watch(
+  () => userStore.getGuildsLoading,
+  () => {
+    loading.value = userStore.getGuildsLoading;
+  }
+);
 </script>
 
 <template>
@@ -42,7 +51,8 @@ watch(
       </div>
     </div>
     <div v-else>
-      <h2>
+      <h2 v-if="loading">Loading...</h2>
+      <h2 v-else>
         No servers yet. Create one on
         <a rel="noopener" href="https://discord.com/" target="_blank">Discord</a
         >!

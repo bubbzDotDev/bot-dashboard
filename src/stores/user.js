@@ -7,11 +7,13 @@ export const useUserStore = defineStore({
     user: {},
     loading: false,
     mutualGuilds: [],
+    guildsLoading: false,
   }),
   getters: {
     getUser: (state) => state.user,
     getLoading: (state) => state.loading,
     getMutualGuilds: (state) => state.mutualGuilds,
+    getGuildsLoading: (state) => state.guildsLoading,
   },
   actions: {
     fetchUserStatus() {
@@ -28,12 +30,16 @@ export const useUserStore = defineStore({
         });
     },
     fetchMutualGuilds() {
+      this.guildsLoading = true;
       getMutualGuilds()
         .then(({ data }) => {
           this.mutualGuilds = data;
         })
         .catch((err) => {
           console.log(err);
+        })
+        .finally(() => {
+          this.guildsLoading = false;
         });
     },
   },

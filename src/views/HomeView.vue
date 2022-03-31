@@ -1,6 +1,23 @@
 <script setup>
-import { RouterLink } from "vue-router";
 import SignIn from "@/components/auth/SignIn.vue";
+import ToDashboard from "@/components/auth/ToDashboard.vue";
+import { ref, onBeforeMount, watch } from "vue";
+import { RouterLink } from "vue-router";
+import { useUserStore } from "@/stores/user";
+
+const userStore = useUserStore();
+
+const user = ref({});
+onBeforeMount(async () => {
+  await userStore.fetchUserStatus();
+});
+user.value = userStore.getUser;
+watch(
+  () => userStore.getUser,
+  () => {
+    user.value = userStore.getUser;
+  }
+);
 </script>
 
 <template>
@@ -16,7 +33,14 @@ import SignIn from "@/components/auth/SignIn.vue";
       <button>LEARN MORE</button>
     </RouterLink>
 
-    <section>
+    <section v-if="user">
+      <h2>WELCOME BACK!</h2>
+      <ToDashboard
+        :username="user.username"
+        :discriminator="user.discriminator"
+      />
+    </section>
+    <section v-else>
       <h2>GET STARTED NOW!</h2>
       <SignIn />
     </section>
@@ -36,7 +60,14 @@ import SignIn from "@/components/auth/SignIn.vue";
       <p>Create a custom embedded message with an updating preview of it.</p>
     </section>
 
-    <section>
+    <section v-if="user">
+      <h2>GLAD TO HAVE YOU BACK!</h2>
+      <ToDashboard
+        :username="user.username"
+        :discriminator="user.discriminator"
+      />
+    </section>
+    <section v-else>
       <h2>TRY IT TODAY!</h2>
       <SignIn />
     </section>
@@ -55,9 +86,14 @@ main {
 .gif-container {
   border: 3px solid black;
   height: 200px;
+  width: 200px;
 }
 
 section {
   margin: 3rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 }
 </style>

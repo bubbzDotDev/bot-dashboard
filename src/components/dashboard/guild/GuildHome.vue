@@ -9,9 +9,7 @@ const guilds = ref([]);
 guilds.value = userStore.getMutualGuilds;
 
 const guildId = ref(null);
-
 const route = useRoute();
-
 guildId.value = route.params.id;
 
 const matchingGuild = guilds.value.filter((guild) => {
@@ -25,7 +23,6 @@ if (!matchingGuild.length) {
 }
 
 const currentGuild = ref({});
-
 currentGuild.value = matchingGuild[0];
 </script>
 
