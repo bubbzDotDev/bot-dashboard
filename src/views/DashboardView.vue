@@ -2,6 +2,7 @@
 import { ref, onBeforeMount, watch } from "vue";
 import { RouterView } from "vue-router";
 import { useUserStore } from "@/stores/user";
+import SignIn from "@/components/auth/SignIn.vue";
 
 const userStore = useUserStore();
 
@@ -36,11 +37,18 @@ watch(
       <h2>Loading...</h2>
     </div>
     <div v-else>
-      <div v-if="user">
-        <RouterView />
+      <div
+        v-if="
+          user &&
+          Object.keys(user).length === 0 &&
+          Object.getPrototypeOf(user) === Object.prototype
+        "
+      >
+        <h2>Not signed in.</h2>
+        <SignIn />
       </div>
       <div v-else>
-        <h2>Not logged in.</h2>
+        <RouterView />
       </div>
     </div>
   </main>

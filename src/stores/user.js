@@ -8,12 +8,14 @@ export const useUserStore = defineStore({
     loading: false,
     mutualGuilds: [],
     guildsLoading: false,
+    menuIsOpen: false,
   }),
   getters: {
     getUser: (state) => state.user,
     getLoading: (state) => state.loading,
     getMutualGuilds: (state) => state.mutualGuilds,
     getGuildsLoading: (state) => state.guildsLoading,
+    getMenuIsOpen: (state) => state.menuIsOpen,
   },
   actions: {
     fetchUserStatus() {
@@ -41,6 +43,9 @@ export const useUserStore = defineStore({
         .finally(() => {
           this.guildsLoading = false;
         });
+    },
+    updateMenu(payload) {
+      this.menuIsOpen = payload;
     },
   },
 });

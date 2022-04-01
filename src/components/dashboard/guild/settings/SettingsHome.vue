@@ -36,13 +36,24 @@ li {
   margin: 1rem;
 }
 .setting-card {
-  border: 3px solid $primary;
+  background-color: $primary;
+  color: $link-light;
+  border: 3px solid $link-light;
   padding: 1rem;
   height: 85px;
-  width: 100px;
+  width: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
+  text-decoration: none;
+  transition: 0.25s;
+
+  &:hover {
+    animation: rock-slightly 1s;
+    background-color: $primary-light;
+    color: $link-dark;
+    border: 3px solid $primary;
+  }
 }
 </style>

@@ -21,5 +21,7 @@ const redirect = () => {
   border: 3px solid $primary;
   padding: 1rem;
   height: 85px;
+  width: fit-content;
+  margin: 0 auto;
 }
 </style>

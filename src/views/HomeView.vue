@@ -1,16 +1,14 @@
 <script setup>
 import SignIn from "@/components/auth/SignIn.vue";
 import ToDashboard from "@/components/auth/ToDashboard.vue";
-import { ref, onBeforeMount, watch } from "vue";
+import { ref, watch } from "vue";
 import { RouterLink } from "vue-router";
 import { useUserStore } from "@/stores/user";
 
 const userStore = useUserStore();
 
 const user = ref({});
-onBeforeMount(async () => {
-  await userStore.fetchUserStatus();
-});
+
 user.value = userStore.getUser;
 watch(
   () => userStore.getUser,
@@ -33,16 +31,22 @@ watch(
       <button>LEARN MORE</button>
     </RouterLink>
 
-    <section v-if="user">
+    <section
+      v-if="
+        user &&
+        Object.keys(user).length === 0 &&
+        Object.getPrototypeOf(user) === Object.prototype
+      "
+    >
+      <h2>GET STARTED NOW!</h2>
+      <SignIn />
+    </section>
+    <section v-else>
       <h2>WELCOME BACK!</h2>
       <ToDashboard
         :username="user.username"
         :discriminator="user.discriminator"
       />
-    </section>
-    <section v-else>
-      <h2>GET STARTED NOW!</h2>
-      <SignIn />
     </section>
 
     <section>
@@ -60,16 +64,22 @@ watch(
       <p>Create a custom embedded message with an updating preview of it.</p>
     </section>
 
-    <section v-if="user">
+    <section
+      v-if="
+        user &&
+        Object.keys(user).length === 0 &&
+        Object.getPrototypeOf(user) === Object.prototype
+      "
+    >
+      <h2>TRY IT TODAY!</h2>
+      <SignIn />
+    </section>
+    <section v-else>
       <h2>GLAD TO HAVE YOU BACK!</h2>
       <ToDashboard
         :username="user.username"
         :discriminator="user.discriminator"
       />
-    </section>
-    <section v-else>
-      <h2>TRY IT TODAY!</h2>
-      <SignIn />
     </section>
   </main>
 </template>
