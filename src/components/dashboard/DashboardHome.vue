@@ -71,17 +71,29 @@ watch(
 
 .guild-card {
   margin: 1rem;
-  border: 3px solid $primary;
+  background-color: $primary;
+  color: $link-light;
+  border: 3px solid $link-light;
   padding: 1rem;
   height: 85px;
-  width: 100px;
+  width: 150px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  text-decoration: none;
+  transition: 0.5s;
 
   h3 {
     margin: 0;
+    text-align: center;
+  }
+
+  &:hover {
+    animation: rock-slightly 1s;
+    background-color: $primary-light;
+    color: $link-dark;
+    border: 3px solid $primary;
   }
 }
 </style>

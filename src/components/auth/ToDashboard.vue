@@ -5,7 +5,7 @@ const props = defineProps(["username", "discriminator"]);
 </script>
 
 <template>
-  <div class="sign-in-container">
+  <div class="to-dashboard-container">
     <span>Hi there, {{ props.username }}#{{ props.discriminator }}!</span>
     <RouterLink to="/dashboard">
       <button type="button">DASHBOARD</button>
@@ -15,7 +15,7 @@ const props = defineProps(["username", "discriminator"]);
 
 <style lang="scss" scoped>
 @use "@/assets/scss/main.scss" as *;
-.sign-in-container {
+.to-dashboard-container {
   display: flex;
   flex-direction: column;
   align-items: center;
