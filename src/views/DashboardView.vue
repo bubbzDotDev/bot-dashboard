@@ -9,12 +9,18 @@ const userStore = useUserStore();
 const user = ref({});
 const loading = ref(false);
 
-onBeforeMount(async () => {
-  await userStore.fetchUserStatus();
-});
-
 user.value = userStore.getUser;
 loading.value = userStore.getLoading;
+
+if (
+  user.value &&
+  Object.keys(user.value).length === 0 &&
+  Object.getPrototypeOf(user.value) === Object.prototype
+) {
+  onBeforeMount(async () => {
+    await userStore.fetchUserStatus();
+  });
+}
 
 watch(
   () => userStore.getUser,

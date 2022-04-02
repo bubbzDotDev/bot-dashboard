@@ -1,2 +1,39 @@
 @forward 'partials';
+@use 'partials/colors' as *;
+@use 'partials/mixins/buttons' as *;
 
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "MyWebFont", sans-serif;
+}
+
+a {
+  color: $link-dark;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+main {
+  background-color: $primary-light;
+  padding: 1rem;
+}
+
+button {
+  @include button;
+}
+
+.app-grid {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.no-scroll {
+  overflow: hidden;
+}

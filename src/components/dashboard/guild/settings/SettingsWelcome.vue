@@ -19,7 +19,7 @@ const message = ref(`Hi {member}!`);
 
 <template>
   <div>
-    <h2>Update Welcome Message</h2>
+    <h3>Update Welcome Message</h3>
     <form>
       <label>
         Current Channel

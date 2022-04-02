@@ -49,7 +49,7 @@ import { RouterLink } from "vue-router";
         <RouterLink to="/">
           <img
             src="@/assets/images/home-32px.png"
-            alt="Home"
+            alt="House"
             width="32"
             height="32"
             loading="lazy"

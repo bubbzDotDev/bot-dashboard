@@ -12,7 +12,7 @@ const updatePrefix = () => {
 
 <template>
   <div>
-    <h2>Update Command Prefix</h2>
+    <h3>Update Command Prefix</h3>
     <form>
       <label>
         Current Prefix: {{ updatedPrefix }}

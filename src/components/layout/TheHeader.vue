@@ -28,9 +28,5 @@ header {
   padding: 1rem;
   color: $primary-light;
   z-index: 1;
-
-  h1 {
-    font-size: 1.5rem;
-  }
 }
 </style>

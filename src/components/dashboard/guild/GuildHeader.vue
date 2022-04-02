@@ -60,8 +60,8 @@ legend {
 
 .guild-image {
   position: absolute;
-  top: -25px;
-  left: -20px;
+  top: -33px;
+  left: -23px;
   background-color: $primary;
   border-radius: 50%;
   padding: 0.25rem;
@@ -73,5 +73,6 @@ hr {
   background-color: $primary;
   border: none;
   width: 95%;
+  border-radius: 2px;
 }
 </style>
