@@ -38,7 +38,7 @@ watch(
       <div class="guild-card-container">
         <div v-for="guild in guilds" :key="guild.id">
           <RouterLink :to="`/dashboard/${guild.id}`" class="guild-card">
-            <h3>{{ guild.name }}</h3>
+            <p>{{ guild.name }}</p>
             <img
               v-if="guild.icon"
               :src="getGuildIconURL(guild)"
@@ -70,13 +70,9 @@ watch(
 }
 
 .guild-card {
+  @include card;
+
   margin: 1rem;
-  background-color: $primary;
-  color: $link-light;
-  border: 3px solid $link-light;
-  padding: 1rem;
-  height: 85px;
-  width: 150px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -84,7 +80,7 @@ watch(
   text-decoration: none;
   transition: 0.5s;
 
-  h3 {
+  p {
     margin: 0;
     text-align: center;
   }

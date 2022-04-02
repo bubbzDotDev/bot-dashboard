@@ -4,7 +4,7 @@ import { RouterLink } from "vue-router";
 
 <template>
   <div>
-    <h2>Settings</h2>
+    <h3>Settings</h3>
     <ul>
       <li>
         <RouterLink to="settings/prefix" class="setting-card"
@@ -36,12 +36,8 @@ li {
   margin: 1rem;
 }
 .setting-card {
-  background-color: $primary;
-  color: $link-light;
-  border: 3px solid $link-light;
-  padding: 1rem;
-  height: 85px;
-  width: 150px;
+  @include card;
+
   display: flex;
   justify-content: center;
   align-items: center;

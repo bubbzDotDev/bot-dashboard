@@ -1,0 +1,31 @@
+@use 'mixins/breakpoints' as *;
+
+// Typography
+h2,
+h3 {
+  text-align: center;
+}
+
+h1 {
+  font-size: 1.7rem;
+
+  @include breakpoint("small") {
+    font-size: 2.3rem;
+  }
+}
+
+h2 {
+  font-size: 1.5rem;
+
+  @include breakpoint("small") {
+    font-size: 1.7rem;
+  }
+}
+
+h3 {
+  font-size: 1.3rem;
+
+  @include breakpoint("small") {
+    font-size: 1.5rem;
+  }
+}
