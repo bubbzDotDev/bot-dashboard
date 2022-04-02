@@ -1,34 +1,23 @@
 <script setup>
-import { ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useUserStore } from "@/stores/user";
+// import { ref, watch } from "vue";
+// import { useGuildStore } from "@/stores/guild";
+import GuildHeader from "@/components/dashboard/guild/GuildHeader.vue";
 
-const userStore = useUserStore();
+// const guildStore = useGuildStore();
 
-const guilds = ref([]);
-guilds.value = userStore.getMutualGuilds;
-
-const guildId = ref(null);
-const route = useRoute();
-guildId.value = route.params.id;
-
-const matchingGuild = guilds.value.filter((guild) => {
-  return guild.id === guildId.value;
-});
-
-const router = useRouter();
-
-if (!matchingGuild.length) {
-  router.push({ name: "not-found" });
-}
-
-const currentGuild = ref({});
-currentGuild.value = matchingGuild[0];
+// const currentGuild = ref({});
+// currentGuild.value = guildStore.getGuild;
+// watch(
+//   () => guildStore.getGuild,
+//   () => {
+//     currentGuild.value = guildStore.getGuild;
+//   }
+// );
 </script>
 
 <template>
-  <div>
-    <h2>{{ currentGuild.name }}</h2>
+  <div class="guild-home">
+    <GuildHeader />
   </div>
 </template>
 
