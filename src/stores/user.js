@@ -33,6 +33,7 @@ export const useUserStore = defineStore({
     },
     fetchMutualGuilds() {
       this.guildsLoading = true;
+      console.log("loading is:", this.guildsLoading); // Remove for production
       getMutualGuilds()
         .then(({ data }) => {
           this.mutualGuilds = data;
@@ -42,6 +43,7 @@ export const useUserStore = defineStore({
         })
         .finally(() => {
           this.guildsLoading = false;
+          console.log("loading is:", this.guildsLoading); // Remove for production
         });
     },
     updateMenu(payload) {
