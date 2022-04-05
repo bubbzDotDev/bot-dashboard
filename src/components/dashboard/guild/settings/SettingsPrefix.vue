@@ -1,17 +1,50 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import { useGuildStore } from "@/stores/guild";
 
-const prefix = ref("a!");
+const guildStore = useGuildStore();
 
-const updatedPrefix = ref("a!");
+const guildConfig = ref({});
 
-const updatePrefix = () => {
-  updatedPrefix.value = prefix.value;
+const prefix = ref("");
+const updatedPrefix = ref("");
+
+guildConfig.value = guildStore.getConfig;
+
+prefix.value = guildConfig.value.prefix;
+updatedPrefix.value = guildConfig.value.prefix;
+
+watch(
+  () => guildStore.getConfig,
+  () => {
+    guildConfig.value = guildStore.getConfig;
+    updatedPrefix.value = guildConfig.value.prefix;
+  }
+);
+
+const loading = ref(false);
+loading.value = guildStore.getPrefixLoading;
+watch(
+  () => guildStore.getPrefixLoading,
+  () => {
+    loading.value = guildStore.getPrefixLoading;
+  }
+);
+
+const updatePrefix = async () => {
+  try {
+    await guildStore.setGuildPrefix(prefix.value);
+  } catch (err) {
+    console.log(err);
+  }
 };
 </script>
 
 <template>
-  <div>
+  <div v-if="loading">
+    <h3>Loading...</h3>
+  </div>
+  <div v-else>
     <h3>Update Command Prefix</h3>
     <form>
       <label>
