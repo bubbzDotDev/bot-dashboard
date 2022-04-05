@@ -25,7 +25,7 @@ export const useUserStore = defineStore({
           this.user = data;
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err); // Remove for production; add error handling in UI.
         })
         .finally(() => {
           this.loading = false;
@@ -38,7 +38,7 @@ export const useUserStore = defineStore({
           this.mutualGuilds = data;
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err); // Remove for production; add error handling in UI.
         })
         .finally(() => {
           this.guildsLoading = false;

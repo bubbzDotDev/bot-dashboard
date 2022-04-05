@@ -1,59 +1,74 @@
 <script setup>
-import { ref, watch } from "vue";
-import { RouterLink, RouterView, useRoute, useRouter } from "vue-router";
+import { onBeforeMount, ref, watch } from "vue";
+import { RouterLink, RouterView, useRoute } from "vue-router";
 import { useUserStore } from "@/stores/user";
 import { useGuildStore } from "@/stores/guild";
 import GuildNav from "@/components/dashboard/guild/GuildNav.vue";
 
 const userStore = useUserStore();
+const guildStore = useGuildStore();
 
-const guilds = ref([]);
-guilds.value = userStore.getMutualGuilds;
+const route = useRoute();
+
+const mutualGuildId = ref(null);
+const currentGuild = ref({});
+
+const loading = ref(false);
+loading.value = userStore.getGuildsLoading;
 watch(
-  () => userStore.getMutualGuilds,
+  () => userStore.getGuildsLoading,
   () => {
-    guilds.value = userStore.getMutualGuilds;
+    loading.value = userStore.getGuildsLoading;
   }
 );
 
-const guildId = ref(null);
-const route = useRoute();
-guildId.value = route.params.id;
+const mutualGuilds = ref([]);
+mutualGuilds.value = userStore.getMutualGuilds;
+watch(
+  () => userStore.getMutualGuilds,
+  () => {
+    mutualGuilds.value = userStore.getMutualGuilds;
+  }
+);
 
-const matchingGuild = guilds.value.filter((guild) => {
-  return guild.id === guildId.value;
+if (!mutualGuilds.value.length) {
+  onBeforeMount(async () => {
+    await userStore.fetchMutualGuilds();
+  });
+}
+
+mutualGuildId.value = route.params.id;
+
+const matchingMutualGuild = mutualGuilds.value.filter((mutualGuild) => {
+  return mutualGuild.id === mutualGuildId.value;
 });
 
-const router = useRouter();
-
-const currentGuild = ref({});
-
-if (!matchingGuild.length) {
-  router.push({ name: "not-found" });
-} else {
-  currentGuild.value = matchingGuild[0];
-
-  const guildStore = useGuildStore();
-  guildStore.setGuild(currentGuild.value);
-}
+currentGuild.value = matchingMutualGuild[0];
+guildStore.setGuild(currentGuild.value);
 </script>
 
 <template>
-  <div
-    v-if="
-      currentGuild &&
-      Object.keys(currentGuild).length === 0 &&
-      Object.getPrototypeOf(currentGuild) === Object.prototype
-    "
-  >
-    <h2>Could not find server.</h2>
-    <RouterLink to="/dashboard">
-      <button type="button">DASHBOARD</button>
-    </RouterLink>
+  <div v-if="loading">
+    <h2>Loading...</h2>
   </div>
-  <div v-else class="guild-grid">
-    <GuildNav />
-    <RouterView />
+  <div v-else>
+    <div
+      v-if="
+        currentGuild &&
+        Object.keys(currentGuild).length === 0 &&
+        Object.getPrototypeOf(currentGuild) === Object.prototype
+      "
+      class="center"
+    >
+      <h2>Could not find server.</h2>
+      <RouterLink to="/dashboard">
+        <button type="button">DASHBOARD</button>
+      </RouterLink>
+    </div>
+    <div v-else class="guild-grid">
+      <GuildNav />
+      <RouterView />
+    </div>
   </div>
 </template>
 
@@ -61,5 +76,9 @@ if (!matchingGuild.length) {
 .guild-grid {
   display: grid;
   grid-template-rows: auto 1fr;
+}
+
+.center {
+  text-align: center;
 }
 </style>

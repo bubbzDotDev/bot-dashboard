@@ -1,7 +1,7 @@
 <script setup>
 import SignIn from "@/components/auth/SignIn.vue";
 import ToDashboard from "@/components/auth/ToDashboard.vue";
-import { ref, watch } from "vue";
+import { onBeforeMount, ref, watch } from "vue";
 import { RouterLink } from "vue-router";
 import { useUserStore } from "@/stores/user";
 
@@ -10,6 +10,17 @@ const userStore = useUserStore();
 const user = ref({});
 
 user.value = userStore.getUser;
+
+if (
+  user.value &&
+  Object.keys(user.value).length === 0 &&
+  Object.getPrototypeOf(user.value) === Object.prototype
+) {
+  onBeforeMount(async () => {
+    await userStore.fetchUserStatus();
+  });
+}
+
 watch(
   () => userStore.getUser,
   () => {
