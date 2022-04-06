@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onBeforeMount, watch } from "vue";
+import { ref } from "vue";
 import { RouterLink } from "vue-router";
 import { useUserStore } from "@/stores/user";
 import { getGuildIconURL } from "@/utils/helpers";
@@ -8,57 +8,31 @@ const userStore = useUserStore();
 
 const mutualGuilds = ref([]);
 mutualGuilds.value = userStore.getMutualGuilds;
-
-if (!mutualGuilds.value.length) {
-  onBeforeMount(async () => {
-    await userStore.fetchMutualGuilds();
-  });
-}
-
-watch(
-  () => userStore.getMutualGuilds,
-  () => {
-    mutualGuilds.value = userStore.getMutualGuilds;
-  }
-);
-
-const loading = ref(false);
-loading.value = userStore.getGuildsLoading;
-watch(
-  () => userStore.getGuildsLoading,
-  () => {
-    loading.value = userStore.getGuildsLoading;
-  }
-);
 </script>
 
 <template>
-  <div>
-    <div v-if="mutualGuilds.length">
-      <h2>Your Server<span v-if="mutualGuilds.length > 1">s</span></h2>
-      <div class="guild-card-container">
-        <div v-for="mutualGuild in mutualGuilds" :key="mutualGuild.id">
-          <RouterLink :to="`/dashboard/${mutualGuild.id}`" class="guild-card">
-            <p>{{ mutualGuild.name }}</p>
-            <img
-              v-if="mutualGuild.icon"
-              :src="getGuildIconURL(mutualGuild)"
-              alt="Server icon"
-              height="32"
-              width="32"
-            />
-          </RouterLink>
-        </div>
+  <div v-if="mutualGuilds.length">
+    <h2>Your Server<span v-if="mutualGuilds.length > 1">s</span></h2>
+    <div class="guild-card-container">
+      <div v-for="mutualGuild in mutualGuilds" :key="mutualGuild.id">
+        <RouterLink :to="`/dashboard/${mutualGuild.id}`" class="guild-card">
+          <p>{{ mutualGuild.name }}</p>
+          <img
+            v-if="mutualGuild.icon"
+            :src="getGuildIconURL(mutualGuild)"
+            alt="Server icon"
+            height="32"
+            width="32"
+          />
+        </RouterLink>
       </div>
     </div>
-    <div v-else>
-      <h2 v-if="loading">Loading...</h2>
-      <h2 v-else>
-        No servers yet. Create one on
-        <a rel="noopener" href="https://discord.com/" target="_blank">Discord</a
-        >!
-      </h2>
-    </div>
+  </div>
+  <div v-else>
+    <h2>
+      No servers yet. Create one on
+      <a rel="noopener" href="https://discord.com/" target="_blank">Discord</a>!
+    </h2>
   </div>
 </template>
 
