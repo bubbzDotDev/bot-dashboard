@@ -1,39 +1,84 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import { useGuildStore } from "@/stores/guild";
 
-const channels = ref([
-  {
-    id: "12345",
-    name: "#welcome",
-  },
-  {
-    id: "123456",
-    name: "#hello",
-  },
-]);
+const guildStore = useGuildStore();
 
-const currentChannel = ref("");
+const guildConfig = ref({});
+
+const currentChannelId = ref({});
+const updatedChannelId = ref({});
+
+guildConfig.value = guildStore.getConfig;
+
+currentChannelId.value = guildConfig.value.welcomeChannelId;
+updatedChannelId.value = guildConfig.value.welcomeChannelId;
+
+const updatedChannel = ref({});
+
+watch(
+  () => guildStore.getConfig,
+  () => {
+    guildConfig.value = guildStore.getConfig;
+    updatedChannelId.value = guildConfig.value.welcomeChannelId;
+
+    const filteredChannelsUpdated = channels.value.filter(
+      (channel) => updatedChannelId.value === channel.id
+    );
+
+    updatedChannel.value = filteredChannelsUpdated[0];
+  }
+);
+
+const channels = ref([]);
+channels.value = guildStore.getChannels;
+
+const filteredChannels = channels.value.filter(
+  (channel) => currentChannelId.value === channel.id
+);
+
+updatedChannel.value = filteredChannels[0];
 
 const message = ref(`Hi {member}!`);
+
+const loading = ref(false);
+loading.value = guildStore.getWelcomeLoading;
+watch(
+  () => guildStore.getWelcomeLoading,
+  () => {
+    loading.value = guildStore.getWelcomeLoading;
+  }
+);
+
+const updateWelcome = async () => {
+  try {
+    await guildStore.setWelcomeChannel(currentChannelId.value);
+  } catch (err) {
+    console.log(err);
+  }
+};
 </script>
 
 <template>
-  <div>
+  <div v-if="loading">
+    <h3>Loading...</h3>
+  </div>
+  <div v-else>
     <h3>Update Welcome Message</h3>
     <form>
       <label>
-        Current Channel
-        <select v-model="currentChannel">
-          <option v-if="!currentChannel" selected disabled value="">
-            Select
-          </option>
-          <option v-else disabled value="">Select</option>
+        <span
+          >Current Channel:
+          <span v-if="updatedChannel.name">#{{ updatedChannel.name }}</span
+          ><span v-else>Not configured yet</span></span
+        >
+        <select v-model="currentChannelId">
           <option
             v-for="channel in channels"
             :key="channel.id"
             :value="channel.id"
           >
-            {{ channel.name }}
+            #{{ channel.name }}
           </option>
         </select>
       </label>
@@ -41,7 +86,7 @@ const message = ref(`Hi {member}!`);
         Current Message:
         <textarea v-model="message"></textarea>
       </label>
-      <button @click="updateMessage" type="button">UPDATE</button>
+      <button @click="updateWelcome" type="button">UPDATE</button>
     </form>
   </div>
 </template>
@@ -66,6 +111,7 @@ select {
   background-color: $primary-light;
   padding: 0.5rem;
   border: 3px solid $primary;
+  margin: 0.25rem;
 }
 
 textarea {

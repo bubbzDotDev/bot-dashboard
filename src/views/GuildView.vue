@@ -10,15 +10,39 @@ const guildStore = useGuildStore();
 
 const route = useRoute();
 
-const mutualGuildId = ref(null);
-const currentGuild = ref({});
+const guildConfig = ref({});
+guildConfig.value = guildStore.getConfig;
+watch(
+  () => guildStore.getConfig,
+  () => {
+    guildConfig.value = guildStore.getConfig;
+  }
+);
 
-const loading = ref(false);
-loading.value = userStore.getGuildsLoading;
+const channelsLoading = ref(false);
+channelsLoading.value = guildStore.getChannelsLoading;
+watch(
+  () => guildStore.getChannelsLoading,
+  () => {
+    channelsLoading.value = guildStore.getChannelsLoading;
+  }
+);
+
+const configLoading = ref(false);
+configLoading.value = guildStore.getConfigLoading;
+watch(
+  () => guildStore.getConfigLoading,
+  () => {
+    configLoading.value = guildStore.getConfigLoading;
+  }
+);
+
+const guildsLoading = ref(false);
+guildsLoading.value = userStore.getGuildsLoading;
 watch(
   () => userStore.getGuildsLoading,
   () => {
-    loading.value = userStore.getGuildsLoading;
+    guildsLoading.value = userStore.getGuildsLoading;
   }
 );
 
@@ -37,18 +61,46 @@ if (!mutualGuilds.value.length) {
   });
 }
 
+const mutualGuildId = ref("");
 mutualGuildId.value = route.params.id;
 
-const matchingMutualGuild = mutualGuilds.value.filter((mutualGuild) => {
-  return mutualGuild.id === mutualGuildId.value;
-});
+const matchingMutualGuild = mutualGuilds.value.filter(
+  (mutualGuild) => mutualGuild.id === mutualGuildId.value
+);
 
+const currentGuild = ref({});
 currentGuild.value = matchingMutualGuild[0];
 guildStore.setGuild(currentGuild.value);
+
+if (
+  (guildConfig.value &&
+    Object.keys(guildConfig.value).length === 0 &&
+    Object.getPrototypeOf(guildConfig.value) === Object.prototype) ||
+  currentGuild.value.id != guildConfig.value.guildId
+) {
+  onBeforeMount(async () => {
+    await guildStore.fetchGuildConfig();
+  });
+}
+
+const channels = ref([]);
+channels.value = guildStore.getChannels;
+watch(
+  () => guildStore.getChannels,
+  () => {
+    channels.value = guildStore.getChannels;
+  }
+);
+
+if (!channels.value.length) {
+  onBeforeMount(async () => {
+    await guildStore.fetchGuildChannels();
+  });
+}
 </script>
 
 <template>
-  <div v-if="loading">
+  <div v-if="guildsLoading || configLoading || channelsLoading">
     <h2>Loading...</h2>
   </div>
   <div v-else>

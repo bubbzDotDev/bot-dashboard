@@ -9,13 +9,25 @@ export const getMutualGuilds = () =>
   axios.get(`${API_URL}/discord/guilds`, CONFIG);
 
 export const getGuildConfig = (guildId) =>
-  axios.get(`${API_URL}/guilds/config/${guildId}`, CONFIG);
+  axios.get(`${API_URL}/guilds/${guildId}/config`, CONFIG);
 
 export const updateGuildPrefix = (guildId, prefix) =>
   axios.post(
     `${API_URL}/guilds/${guildId}/config/prefix`,
     {
       prefix,
+    },
+    CONFIG
+  );
+
+export const getGuildChannels = (guildId) =>
+  axios.get(`${API_URL}/discord/guilds/${guildId}/channels`, CONFIG);
+
+export const updateWelcomeChannel = (guildId, welcomeChannelId) =>
+  axios.post(
+    `${API_URL}/guilds/${guildId}/config/welcome`,
+    {
+      welcomeChannelId,
     },
     CONFIG
   );
