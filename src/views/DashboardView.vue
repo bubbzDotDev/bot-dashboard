@@ -7,10 +7,22 @@ import SignIn from "@/components/auth/SignIn.vue";
 const userStore = useUserStore();
 
 const user = ref({});
-const loading = ref(false);
-
 user.value = userStore.getUser;
-loading.value = userStore.getLoading;
+watch(
+  () => userStore.getUser,
+  () => {
+    user.value = userStore.getUser;
+  }
+);
+
+const userLoading = ref(false);
+userLoading.value = userStore.getLoading;
+watch(
+  () => userStore.getLoading,
+  () => {
+    userLoading.value = userStore.getLoading;
+  }
+);
 
 if (
   user.value &&
@@ -22,24 +34,35 @@ if (
   });
 }
 
+const mutualGuilds = ref([]);
+mutualGuilds.value = userStore.getMutualGuilds;
+
+if (!mutualGuilds.value.length) {
+  onBeforeMount(async () => {
+    await userStore.fetchMutualGuilds();
+  });
+}
+
 watch(
-  () => userStore.getUser,
+  () => userStore.getMutualGuilds,
   () => {
-    user.value = userStore.getUser;
+    mutualGuilds.value = userStore.getMutualGuilds;
   }
 );
 
+const guildsLoading = ref(false);
+guildsLoading.value = userStore.getGuildsLoading;
 watch(
-  () => userStore.getLoading,
+  () => userStore.getGuildsLoading,
   () => {
-    loading.value = userStore.getLoading;
+    guildsLoading.value = userStore.getGuildsLoading;
   }
 );
 </script>
 
 <template>
   <main>
-    <div v-if="loading">
+    <div v-if="userLoading || guildsLoading">
       <h2>Loading...</h2>
     </div>
     <div v-else>
