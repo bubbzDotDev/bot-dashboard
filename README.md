@@ -21,6 +21,10 @@ npm install
 ```sh
 # Server
 VITE_API_HOST=
+
+#Discord
+VITE_DISCORD_CLIENT_ID=
+VITE_DISCORD_PERMISSIONS=
 ```
 
 ### Compile and Hot-Reload for Development
