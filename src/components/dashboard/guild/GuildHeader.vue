@@ -60,8 +60,8 @@ legend {
 
 .guild-image-container {
   position: absolute;
-  top: -30px;
-  left: -21px;
+  top: -29px;
+  left: -22px;
   background-color: $primary;
   border-radius: 50%;
   padding: 1px;

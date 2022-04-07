@@ -45,6 +45,13 @@ currentChannel.value = filteredChannels[0];
           <span v-if="!currentChannel">Not configured yet</span>
           <span v-else>#{{ currentChannel.name }}</span>
         </li>
+        <li>
+          <RouterLink :to="`${currentGuild.id}/settings/welcome`">
+            Welcome Message</RouterLink
+          >:
+          <span v-if="!guildConfig.welcomeMessage">Not configured yet</span>
+          <span v-else>"{{ guildConfig.welcomeMessage }}"</span>
+        </li>
       </ul>
     </div>
     <div v-else>
@@ -67,9 +74,11 @@ ul {
   margin: 0 auto;
   padding: 0;
   width: fit-content;
+  max-width: 400px;
 }
 
 li {
   margin: 1rem;
+  line-height: 1.5rem;
 }
 </style>
