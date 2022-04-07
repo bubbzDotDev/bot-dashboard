@@ -13,7 +13,7 @@ import { RouterLink } from "vue-router";
       </li>
       <li>
         <RouterLink to="settings/welcome" class="setting-card"
-          >Welcome Message</RouterLink
+          >Welcome</RouterLink
         >
       </li>
     </ul>

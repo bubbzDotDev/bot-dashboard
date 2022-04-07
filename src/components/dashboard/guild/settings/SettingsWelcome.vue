@@ -9,12 +9,14 @@ const guildConfig = ref({});
 const currentChannelId = ref("");
 const updatedChannelId = ref("");
 const welcomeMessage = ref("");
+const updatedWelcomeMessage = ref("");
 
 guildConfig.value = guildStore.getConfig;
 
 currentChannelId.value = guildConfig.value.welcomeChannelId;
 updatedChannelId.value = guildConfig.value.welcomeChannelId;
 welcomeMessage.value = guildConfig.value.welcomeMessage;
+updatedWelcomeMessage.value = guildConfig.value.welcomeMessage;
 
 const updatedChannel = ref({});
 
@@ -29,6 +31,7 @@ watch(
     );
 
     updatedChannel.value = filteredChannelsUpdated[0];
+    updatedWelcomeMessage.value = guildConfig.value.welcomeMessage;
   }
 );
 
@@ -64,14 +67,14 @@ const updateWelcome = async () => {
     <h3>Loading...</h3>
   </div>
   <div v-else>
-    <h3>Update Welcome Message</h3>
+    <h3>Update Welcome Settings</h3>
     <form>
       <label>
-        <span
-          >Current Channel:
-          <span v-if="!updatedChannel">Not configured yet</span
-          ><span v-else>#{{ updatedChannel.name }}</span></span
-        >
+        <p>
+          <strong>Current Channel:</strong>
+          <span v-if="!updatedChannel">Not configured yet</span>
+          <span v-else>#{{ updatedChannel.name }}</span>
+        </p>
         <select v-model="currentChannelId">
           <option disabled value="">Select a channel</option>
           <option
@@ -84,9 +87,17 @@ const updateWelcome = async () => {
         </select>
       </label>
       <label>
-        Current Message:
+        <p>
+          <strong>Current Message:</strong>
+          <span v-if="!updatedWelcomeMessage">Not configured yet</span>
+          <span v-else>{{ updatedWelcomeMessage }}</span>
+        </p>
         <textarea v-model="welcomeMessage"></textarea>
       </label>
+      <p>
+        Use the <strong>{member}</strong> keyword to tag new members when they
+        join your server.
+      </p>
       <button @click="updateWelcome" type="button">UPDATE</button>
     </form>
   </div>
@@ -99,6 +110,11 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  p {
+    text-align: center;
+    margin-top: 0;
+  }
 }
 
 label {
@@ -106,6 +122,21 @@ label {
   flex-direction: column;
   align-items: center;
   margin: 0.5rem;
+
+  span,
+  p {
+    text-align: center;
+  }
+
+  p {
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+
+    span {
+      margin-top: 0.25rem;
+    }
+  }
 }
 
 select {

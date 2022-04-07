@@ -6,33 +6,77 @@ import { getGuildIconURL } from "@/utils/helpers";
 
 const userStore = useUserStore();
 
-const mutualGuilds = ref([]);
-mutualGuilds.value = userStore.getMutualGuilds;
+const guilds = ref({});
+guilds.value = userStore.getGuilds;
+
+const clientId = import.meta.env.VITE_DISCORD_CLIENT_ID;
+const permissions = import.meta.env.VITE_DISCORD_PERMISSIONS;
+
+const redirect = () => {
+  setTimeout(() => {
+    window.location.href = "http://localhost:3000"; // Update for production
+  }, 5000);
+};
 </script>
 
 <template>
-  <div v-if="mutualGuilds.length">
-    <h2>Your Server<span v-if="mutualGuilds.length > 1">s</span></h2>
-    <div class="guild-card-container">
-      <div v-for="mutualGuild in mutualGuilds" :key="mutualGuild.id">
-        <RouterLink :to="`/dashboard/${mutualGuild.id}`" class="guild-card">
-          <p>{{ mutualGuild.name }}</p>
-          <img
-            v-if="mutualGuild.icon"
-            :src="getGuildIconURL(mutualGuild)"
-            alt="Server icon"
-            height="32"
-            width="32"
-          />
-        </RouterLink>
-      </div>
-    </div>
-  </div>
-  <div v-else>
+  <div
+    v-if="
+      guilds &&
+      Object.keys(guilds).length === 0 &&
+      Object.getPrototypeOf(guilds) === Object.prototype
+    "
+  >
     <h2>
       No servers yet. Create one on
       <a rel="noopener" href="https://discord.com/" target="_blank">Discord</a>!
     </h2>
+  </div>
+  <div v-else>
+    <div v-if="guilds.mutualGuilds.length">
+      <h2>Manage Bot</h2>
+      <div class="guild-card-container">
+        <div v-for="mutualGuild in guilds.mutualGuilds" :key="mutualGuild.id">
+          <RouterLink :to="`/dashboard/${mutualGuild.id}`" class="guild-card">
+            <p>{{ mutualGuild.name }}</p>
+            <div v-if="mutualGuild.icon" class="guild-image-container">
+              <img
+                :src="getGuildIconURL(mutualGuild)"
+                alt="Server icon"
+                height="32"
+                width="32"
+              />
+            </div>
+          </RouterLink>
+        </div>
+      </div>
+    </div>
+    <div v-if="guilds.availableGuilds.length">
+      <h2>Add Bot</h2>
+      <div class="guild-card-container">
+        <div
+          v-for="availableGuild in guilds.availableGuilds"
+          :key="availableGuild.id"
+        >
+          <a
+            @click="redirect"
+            class="guild-card"
+            :href="`https://discord.com/api/oauth2/authorize?client_id=${clientId}&scope=bot&permissions=${permissions}&guild_id=${availableGuild.id}&disable_guild_select=true`"
+            target="_blank"
+          >
+            <p>{{ availableGuild.name }}</p>
+            <div v-if="availableGuild.icon" class="guild-image-container">
+              <img
+                :src="getGuildIconURL(availableGuild)"
+                alt="Server icon"
+                height="32"
+                width="32"
+              />
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -65,6 +109,20 @@ mutualGuilds.value = userStore.getMutualGuilds;
     background-color: $primary-light;
     color: $link-dark;
     border: 3px solid $primary;
+  }
+}
+
+.guild-image-container {
+  border: 3px solid $link-light;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    border-radius: 50%;
   }
 }
 </style>

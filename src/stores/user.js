@@ -1,19 +1,19 @@
 import { defineStore } from "pinia";
-import { getAuthStatus, getMutualGuilds } from "@/utils/api";
+import { getAuthStatus, getGuilds } from "@/utils/api";
 
 export const useUserStore = defineStore({
   id: "user",
   state: () => ({
     user: {},
     loading: false,
-    mutualGuilds: [],
+    guilds: {},
     guildsLoading: false,
     menuIsOpen: false,
   }),
   getters: {
     getUser: (state) => state.user,
     getLoading: (state) => state.loading,
-    getMutualGuilds: (state) => state.mutualGuilds,
+    getGuilds: (state) => state.guilds,
     getGuildsLoading: (state) => state.guildsLoading,
     getMenuIsOpen: (state) => state.menuIsOpen,
   },
@@ -31,11 +31,11 @@ export const useUserStore = defineStore({
           this.loading = false;
         });
     },
-    fetchMutualGuilds() {
+    fetchGuilds() {
       this.guildsLoading = true;
-      getMutualGuilds()
+      getGuilds()
         .then(({ data }) => {
-          this.mutualGuilds = data;
+          this.guilds = data;
         })
         .catch((err) => {
           console.log(err); // Remove for production; add error handling in UI.
