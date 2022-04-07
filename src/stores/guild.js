@@ -69,9 +69,9 @@ export const useGuildStore = defineStore({
           this.channelsLoading = false;
         });
     },
-    setWelcomeChannel(welcomeChannelId) {
+    setWelcome(welcomeChannelId, welcomeMessage) {
       this.welcomeLoading = true;
-      updateWelcomeChannel(this.guild.id, welcomeChannelId)
+      updateWelcomeChannel(this.guild.id, welcomeChannelId, welcomeMessage)
         .then(({ data }) => {
           this.config = data;
         })

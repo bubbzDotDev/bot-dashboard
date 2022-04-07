@@ -92,7 +92,10 @@ watch(
   }
 );
 
-if (!channels.value.length) {
+if (
+  !channels.value.length ||
+  currentGuild.value.id != guildConfig.value.guildId
+) {
   onBeforeMount(async () => {
     await guildStore.fetchGuildChannels();
   });
