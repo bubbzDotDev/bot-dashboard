@@ -61,13 +61,23 @@ watch(
     </section>
 
     <section>
-      <h2>Placeholder for gif #1</h2>
-      <div class="gif-container"></div>
+      <h2>Quickly Change Prefix</h2>
+      <div class="gif-container">
+        <img
+          src="@/assets/images/update-prefix-424x262.webp"
+          alt="Demonstrating update prefix feature"
+        />
+      </div>
     </section>
 
     <section>
-      <h2>Placeholder for gif #2</h2>
-      <div class="gif-container"></div>
+      <h2>Update Welcome Channel & Message</h2>
+      <div class="gif-container">
+        <img
+          src="@/assets/images/update-welcome-640x480.webp"
+          alt="Demonstrating update welcome channel and message feature"
+        />
+      </div>
     </section>
 
     <section id="learn">
@@ -106,8 +116,11 @@ main {
 
 .gif-container {
   border: 3px solid black;
-  height: 200px;
-  width: 200px;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
 }
 
 section {

@@ -42,8 +42,8 @@ currentChannel.value = filteredChannels[0];
           <RouterLink :to="`${currentGuild.id}/settings/welcome`">
             Welcome Channel</RouterLink
           >:
-          <span v-if="currentChannel.name">#{{ currentChannel.name }}</span>
-          <span v-else>Not configured yet</span>
+          <span v-if="!currentChannel">Not configured yet</span>
+          <span v-else>#{{ currentChannel.name }}</span>
         </li>
       </ul>
     </div>

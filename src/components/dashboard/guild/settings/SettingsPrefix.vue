@@ -48,7 +48,7 @@ const updatePrefix = async () => {
     <h3>Update Command Prefix</h3>
     <form>
       <label>
-        Current Prefix: {{ updatedPrefix }}
+        <p><strong>Current Prefix:</strong> {{ updatedPrefix }}</p>
         <input v-model="prefix" type="text" />
       </label>
       <button @click="updatePrefix" type="button">UPDATE</button>
@@ -84,6 +84,6 @@ input {
 button {
   @include button;
   width: 100px;
-  margin-bottom: 1rem;
+  margin: 1rem;
 }
 </style>

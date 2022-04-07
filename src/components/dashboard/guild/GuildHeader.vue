@@ -19,7 +19,7 @@ watch(
   <div class="guild-header">
     <fieldset>
       <legend>Your Server</legend>
-      <div v-if="currentGuild.icon" class="guild-image">
+      <div v-if="currentGuild.icon" class="guild-image-container">
         <img
           :src="getGuildIconURL(currentGuild)"
           alt="Server icon"
@@ -58,14 +58,21 @@ legend {
   text-align: center;
 }
 
-.guild-image {
+.guild-image-container {
   position: absolute;
-  top: -33px;
-  left: -23px;
+  top: -30px;
+  left: -21px;
   background-color: $primary;
   border-radius: 50%;
-  padding: 0.25rem;
+  padding: 1px;
   border: 3px solid $link-light;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    border-radius: 50%;
+  }
 }
 
 hr {

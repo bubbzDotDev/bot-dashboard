@@ -17,6 +17,12 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 npm install
 ```
 
+### Configure .env file
+```sh
+# Server
+VITE_API_HOST=
+```
+
 ### Compile and Hot-Reload for Development
 
 ```sh

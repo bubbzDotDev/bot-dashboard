@@ -34,19 +34,23 @@ if (
   });
 }
 
-const mutualGuilds = ref([]);
-mutualGuilds.value = userStore.getMutualGuilds;
+const guilds = ref({});
+guilds.value = userStore.getGuilds;
 
-if (!mutualGuilds.value.length) {
+if (
+  guilds.value &&
+  Object.keys(guilds.value).length === 0 &&
+  Object.getPrototypeOf(guilds.value) === Object.prototype
+) {
   onBeforeMount(async () => {
-    await userStore.fetchMutualGuilds();
+    await userStore.fetchGuilds();
   });
 }
 
 watch(
-  () => userStore.getMutualGuilds,
+  () => userStore.getGuilds,
   () => {
-    mutualGuilds.value = userStore.getMutualGuilds;
+    guilds.value = userStore.getGuilds;
   }
 );
 
@@ -85,6 +89,6 @@ watch(
 
 <style lang="scss" scoped>
 main {
-  padding: 0;
+  padding: 0 0 1rem 0;
 }
 </style>
