@@ -95,8 +95,8 @@ const updateWelcome = async () => {
         <textarea v-model="welcomeMessage"></textarea>
       </label>
       <p>
-        Use the <strong>{member}</strong> keyword to tag new members when they
-        join your server.
+        Use <strong>{member}</strong> to tag new members when they join your
+        server.
       </p>
       <button @click="updateWelcome" type="button">UPDATE</button>
     </form>
@@ -157,7 +157,6 @@ textarea {
 }
 
 button {
-  @include button;
   width: 100px;
   margin-bottom: 1rem;
 }

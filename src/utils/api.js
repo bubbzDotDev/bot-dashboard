@@ -35,3 +35,12 @@ export const updateWelcomeChannel = (
     },
     CONFIG
   );
+
+export const sendAnnouncement = (payload) =>
+  axios.post(
+    `${API_URL}/guilds/${payload.guildId}/announce`,
+    {
+      payload,
+    },
+    CONFIG
+  );

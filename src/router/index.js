@@ -11,6 +11,7 @@ import SettingsView from "@/views/SettingsView.vue";
 import SettingsHome from "@/components/dashboard/guild/settings/SettingsHome.vue";
 import SettingsPrefix from "@/components/dashboard/guild/settings/SettingsPrefix.vue";
 import SettingsWelcome from "@/components/dashboard/guild/settings/SettingsWelcome.vue";
+import AnnounceHome from "@/components/dashboard/guild/announce/AnnounceHome.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,6 +45,11 @@ const router = createRouter({
               name: "guild-home",
               path: "",
               component: GuildHome,
+            },
+            {
+              name: "announce-home",
+              path: "announce",
+              component: AnnounceHome,
             },
             {
               name: "guild-settings",

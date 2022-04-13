@@ -73,8 +73,7 @@ footer {
   align-items: center;
   justify-content: center;
 
-  a,
-  router-link {
+  a {
     display: flex;
     align-items: center;
     justify-content: start;

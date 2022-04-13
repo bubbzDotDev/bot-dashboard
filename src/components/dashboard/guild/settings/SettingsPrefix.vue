@@ -82,7 +82,6 @@ input {
 }
 
 button {
-  @include button;
   width: 100px;
   margin: 1rem;
 }

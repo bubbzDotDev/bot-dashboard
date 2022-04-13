@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { RouterLink } from "vue-router";
 import { useUserStore } from "@/stores/user";
 import { getGuildIconURL } from "@/utils/helpers";
@@ -8,6 +8,12 @@ const userStore = useUserStore();
 
 const guilds = ref({});
 guilds.value = userStore.getGuilds;
+watch(
+  () => userStore.getGuilds,
+  () => {
+    guilds.value = userStore.getGuilds;
+  }
+);
 
 const clientId = import.meta.env.VITE_DISCORD_CLIENT_ID;
 const permissions = import.meta.env.VITE_DISCORD_PERMISSIONS;

@@ -4,6 +4,7 @@ import {
   getGuildConfig,
   updateGuildPrefix,
   updateWelcomeChannel,
+  sendAnnouncement,
 } from "@/utils/api";
 
 export const useGuildStore = defineStore({
@@ -16,6 +17,7 @@ export const useGuildStore = defineStore({
     prefixLoading: false,
     channelsLoading: false,
     welcomeLoading: false,
+    announceLoading: false,
   }),
   getters: {
     getGuild: (state) => state.guild,
@@ -25,6 +27,7 @@ export const useGuildStore = defineStore({
     getPrefixLoading: (state) => state.prefixLoading,
     getChannelsLoading: (state) => state.channelsLoading,
     getWelcomeLoading: (state) => state.welcomeLoading,
+    getAnnounceLoading: (state) => state.announceLoading,
   },
   actions: {
     setGuild(payload) {
@@ -80,6 +83,23 @@ export const useGuildStore = defineStore({
         })
         .finally(() => {
           this.welcomeLoading = false;
+        });
+    },
+    announce(payload) {
+      this.announceLoading = true;
+      const newPayload = {
+        ...payload,
+        guildId: this.guild.id,
+      };
+      sendAnnouncement(newPayload)
+        .then(() => {
+          console.log("Announcement sent!"); // Add toast instead
+        })
+        .catch((err) => {
+          console.log(err); // Remove for production; add error handling in UI
+        })
+        .finally(() => {
+          this.announceLoading = false;
         });
     },
   },

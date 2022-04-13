@@ -41,7 +41,11 @@ const toggleMenu = (isOpen = null) => {
           >
         </li>
         <li>
-          <RouterLink to="/" @click="toggleMenu(false)">Embeds</RouterLink>
+          <RouterLink
+            :to="`/dashboard/${guildId}/announce`"
+            @click="toggleMenu(false)"
+            >Announce</RouterLink
+          >
         </li>
         <li>
           <RouterLink
