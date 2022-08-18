@@ -38,7 +38,7 @@ const sendAnnouncement = async () => {
     <GuildHeader />
     <h3>Announce</h3>
     <div class="announce-container">
-      <form>
+      <form @submit.prevent="sendAnnouncement">
         <label>
           <strong>Channel</strong>
           <select v-model="channelId">
@@ -60,17 +60,17 @@ const sendAnnouncement = async () => {
           <strong>Description</strong>
           <textarea v-model="description"></textarea>
         </label>
-        <button @click="sendAnnouncement" type="button">SEND</button>
+        <button type="submit">SEND</button>
       </form>
-      <div class="embed-preview-container">
-        <div class="embed-left-border"></div>
-        <div class="embed-main-section">
+<!--      <div class="embed-preview-container">-->
+<!--        <div class="embed-left-border"></div>-->
+<!--        <div class="embed-main-section">-->
 
-        </div>
-        <div class="embed-right-section">
+<!--        </div>-->
+<!--        <div class="embed-right-section">-->
 
-        </div>
-      </div>
+<!--        </div>-->
+<!--      </div>-->
     </div>
   </div>
 </template>
@@ -82,6 +82,8 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: fit-content;
+  margin: 0 auto;
 }
 
 label {
@@ -115,25 +117,25 @@ button {
 }
 
 .announce-container {
-  display: flex;
-  flex-wrap: wrap;
+  //display: flex;
+  //flex-wrap: wrap;
 }
 
-.embed-preview-container {
-  display: flex;
-}
-
-.embed-left-border {
-  width: 4px;
-  border-radius: 4px 0 0 4px;
-  background-color: #000;
-}
-
-.embed-main-section {
-  background-color: #2f3136;
-}
-
-.embed-right-section {
-  background-color: #2f3136;
-}
+//.embed-preview-container {
+//  display: flex;
+//}
+//
+//.embed-left-border {
+//  width: 4px;
+//  border-radius: 4px 0 0 4px;
+//  background-color: #000;
+//}
+//
+//.embed-main-section {
+//  background-color: #2f3136;
+//}
+//
+//.embed-right-section {
+//  background-color: #2f3136;
+//}
 </style>
