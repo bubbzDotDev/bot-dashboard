@@ -37,30 +37,41 @@ const sendAnnouncement = async () => {
   <div>
     <GuildHeader />
     <h3>Announce</h3>
-    <form>
-      <label>
-        <strong>Channel</strong>
-        <select v-model="channelId">
-          <option disabled value="">Select a channel</option>
-          <option
-            v-for="channel in channels"
-            :key="channel.id"
-            :value="channel.id"
-          >
-            #{{ channel.name }}
-          </option>
-        </select>
-      </label>
-      <label>
-        <strong>Title</strong>
-        <input v-model="title" type="text" />
-      </label>
-      <label>
-        <strong>Description</strong>
-        <textarea v-model="description"></textarea>
-      </label>
-      <button @click="sendAnnouncement" type="button">SEND</button>
-    </form>
+    <div class="announce-container">
+      <form>
+        <label>
+          <strong>Channel</strong>
+          <select v-model="channelId">
+            <option disabled value="">Select a channel</option>
+            <option
+              v-for="channel in channels"
+              :key="channel.id"
+              :value="channel.id"
+            >
+              #{{ channel.name }}
+            </option>
+          </select>
+        </label>
+        <label>
+          <strong>Title</strong>
+          <input v-model="title" type="text" />
+        </label>
+        <label>
+          <strong>Description</strong>
+          <textarea v-model="description"></textarea>
+        </label>
+        <button @click="sendAnnouncement" type="button">SEND</button>
+      </form>
+      <div class="embed-preview-container">
+        <div class="embed-left-border"></div>
+        <div class="embed-main-section">
+
+        </div>
+        <div class="embed-right-section">
+
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -101,5 +112,28 @@ textarea {
 button {
   width: 100px;
   margin-bottom: 1rem;
+}
+
+.announce-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.embed-preview-container {
+  display: flex;
+}
+
+.embed-left-border {
+  width: 4px;
+  border-radius: 4px 0 0 4px;
+  background-color: #000;
+}
+
+.embed-main-section {
+  background-color: #2f3136;
+}
+
+.embed-right-section {
+  background-color: #2f3136;
 }
 </style>
