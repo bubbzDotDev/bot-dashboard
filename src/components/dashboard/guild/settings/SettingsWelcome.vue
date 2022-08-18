@@ -68,14 +68,26 @@ const updateWelcome = async () => {
   </div>
   <div v-else>
     <h3>Update Welcome Settings</h3>
-    <form>
+    <form @submit.prevent="updateWelcome">
       <label>
-        <p>
-          <strong>Current Channel:</strong>
-          <span v-if="!updatedChannel">Not configured yet</span>
-          <span v-else>#{{ updatedChannel.name }}</span>
-        </p>
-        <select v-model="currentChannelId">
+        <strong>Welcome Message:</strong>
+        <br />
+        <span v-if="!updatedWelcomeMessage">Not configured yet</span>
+        <span v-else>{{ updatedWelcomeMessage }}</span>
+        <br />
+        <textarea v-model="welcomeMessage" required></textarea>
+      </label>
+      <p>
+        Use <strong>{member}</strong> to tag new members when they join your
+        server.
+      </p>
+      <label>
+        <strong>Welcome Channel:</strong>
+        <br />
+        <span v-if="!updatedChannel">Not configured yet</span>
+        <span v-else>#{{ updatedChannel.name }}</span>
+        <br />
+        <select v-model="currentChannelId" required>
           <option disabled value="">Select a channel</option>
           <option
             v-for="channel in channels"
@@ -86,19 +98,7 @@ const updateWelcome = async () => {
           </option>
         </select>
       </label>
-      <label>
-        <p>
-          <strong>Current Message:</strong>
-          <span v-if="!updatedWelcomeMessage">Not configured yet</span>
-          <span v-else>{{ updatedWelcomeMessage }}</span>
-        </p>
-        <textarea v-model="welcomeMessage"></textarea>
-      </label>
-      <p>
-        Use <strong>{member}</strong> to tag new members when they join your
-        server.
-      </p>
-      <button @click="updateWelcome" type="button">UPDATE</button>
+      <button type="submit">UPDATE</button>
     </form>
   </div>
 </template>
@@ -110,11 +110,6 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  p {
-    text-align: center;
-    margin-top: 0;
-  }
 }
 
 label {
@@ -122,20 +117,18 @@ label {
   flex-direction: column;
   align-items: center;
   margin: 0.5rem;
+}
 
-  span,
-  p {
-    text-align: center;
-  }
+span,
+p {
+  text-align: center;
+}
 
-  p {
-    margin-top: 0;
-    display: flex;
-    flex-direction: column;
+p {
+  margin-top: 0;
 
-    span {
-      margin-top: 0.25rem;
-    }
+  span {
+    margin-top: 0.5rem;
   }
 }
 

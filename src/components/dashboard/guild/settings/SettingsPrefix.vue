@@ -16,8 +16,8 @@ updatedPrefix.value = guildConfig.value.prefix;
 
 watch(
   () => guildStore.getConfig,
-  () => {
-    guildConfig.value = guildStore.getConfig;
+  (newValue) => {
+    guildConfig.value = newValue;
     updatedPrefix.value = guildConfig.value.prefix;
   }
 );
@@ -48,7 +48,8 @@ const updatePrefix = async () => {
     <h3>Update Command Prefix</h3>
     <form>
       <label>
-        <p><strong>Current Prefix:</strong> {{ updatedPrefix }}</p>
+        <strong>Current Prefix:</strong> {{ updatedPrefix }}
+        <br /><br />
         <input v-model="prefix" type="text" />
       </label>
       <button @click="updatePrefix" type="button">UPDATE</button>

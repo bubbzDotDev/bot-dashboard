@@ -82,7 +82,7 @@ watch(
 
     <section id="learn">
       <h2>About</h2>
-      <p>Create a custom embedded message with an updating preview of it.</p>
+      <p>Create a custom embedded message with a simple form.</p>
     </section>
 
     <section
