@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useGuildStore } from "@/stores/guild";
 import GuildHeader from "@/components/dashboard/guild/GuildHeader.vue";
 
@@ -8,16 +8,25 @@ const channels = ref([]);
 channels.value = guildStore.getChannels;
 
 const channelId = ref("");
+const colorHex = ref("#000000");
 const title = ref("");
+const titleUrl = ref("");
+
 const description = ref("");
 const embed = ref({});
 const embeds = ref([]);
+
+const color = computed(() => {
+  return Number('0x' + colorHex.value.substring(1));
+})
 
 const sendAnnouncement = async () => {
   try {
     const payload = {};
     embed.value.title = title.value;
+    embed.value.url = titleUrl.value;
     embed.value.description = description.value;
+    embed.value.color = color.value;
     embeds.value.push(embed.value);
     payload.embeds = embeds.value;
     payload.channelId = channelId.value;
@@ -25,6 +34,8 @@ const sendAnnouncement = async () => {
     channelId.value = "";
     title.value = "";
     description.value = "";
+    colorHex.value="#000000"
+    titleUrl.value = "";
     embeds.value = [];
     embed.value = {};
   } catch (err) {
@@ -41,7 +52,7 @@ const sendAnnouncement = async () => {
       <form @submit.prevent="sendAnnouncement">
         <label>
           <strong>Channel</strong>
-          <select v-model="channelId">
+          <select v-model="channelId" required>
             <option disabled value="">Select a channel</option>
             <option
               v-for="channel in channels"
@@ -53,12 +64,24 @@ const sendAnnouncement = async () => {
           </select>
         </label>
         <label>
+          <strong>Color</strong>
+          <span v-if="colorHex" :style="`background-color: ${colorHex}`">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <input v-model="colorHex" type="color" />
+        </label>
+        <label>
           <strong>Title</strong>
+          <em class="optional">(optional)</em>
           <input v-model="title" type="text" />
         </label>
         <label>
+          <strong>Title URL</strong>
+          <em class="optional">(optional)</em>
+          <input v-model="titleUrl" type="url" />
+        </label>
+        <label>
           <strong>Description</strong>
-          <textarea v-model="description"></textarea>
+          <em class="required">(required)</em>
+          <textarea v-model="description" required></textarea>
         </label>
         <button type="submit">SEND</button>
       </form>
@@ -119,6 +142,20 @@ button {
 .announce-container {
   //display: flex;
   //flex-wrap: wrap;
+}
+
+em {
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin: 0.25rem;
+}
+
+.optional {
+  color: #117a11;
+}
+
+.required {
+  color: #af1a1a;
 }
 
 //.embed-preview-container {
