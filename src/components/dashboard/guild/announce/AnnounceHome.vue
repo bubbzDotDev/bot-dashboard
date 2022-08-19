@@ -67,82 +67,97 @@ const sendAnnouncement = async () => {
     <h3>Announce</h3>
     <div class="announce-container">
       <form @submit.prevent="sendAnnouncement">
-        <label>
-          <strong>Channel</strong>
-          <select v-model="channelId" required>
-            <option disabled value="">Select a channel</option>
-            <option
-              v-for="channel in channels"
-              :key="channel.id"
-              :value="channel.id"
-            >
-              #{{ channel.name }}
-            </option>
-          </select>
-        </label>
-        <label>
-          <strong>Color</strong>
-          <span v-if="colorHex" :style="`background-color: ${colorHex}`">&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <input v-model="colorHex" type="color" />
-        </label>
-        <label>
-          <strong>Title</strong>
-          <em class="optional">(optional)</em>
-          <input v-model.trim="title" type="text" />
-        </label>
-        <label>
-          <strong>Title URL</strong>
-          <em class="optional">(optional)</em>
-          <input v-model.trim="titleUrl" type="url" />
-        </label>
-        <label>
-          <strong>Description</strong>
-          <em class="required">(required)</em>
-          <textarea v-model.trim="description" required></textarea>
-        </label>
-        <label>
-          <strong>Main Image URL</strong>
-          <em class="optional">(optional)</em>
-          <input v-model.trim="mainImage.url" type="url" />
-        </label>
-        <label>
-          <strong>Thumbnail URL</strong>
-          <em class="optional">(optional)</em>
-          <input v-model.trim="thumbnail.url" type="url" />
-        </label>
-        <label>
-          <strong>Footer Text</strong>
-          <em class="optional">(optional)</em>
-          <input v-model.trim="footer.text" type="text" />
-        </label>
-        <label>
-          <strong>Footer Icon URL</strong>
-          <em class="optional">(optional)</em>
-          <input v-model.trim="footer.icon_url" type="url" />
-        </label>
-        <label>
-          <strong>Author Name</strong>
-          <em class="optional">(optional)</em>
-          <input v-model.trim="author.name" type="text" />
-        </label>
-        <label>
-          <strong>Author URL</strong>
-          <em class="optional">(optional)</em>
-          <input v-model.trim="author.url" type="url" />
-        </label>
-        <label>
-          <strong>Author Icon URL</strong>
-          <em class="optional">(optional)</em>
-          <input v-model.trim="author.icon_url" type="url" />
-        </label>
+        <div class="div-wrap">
+          <fieldset>
+            <legend>Basic Info</legend>
+            <label>
+              <strong>Channel</strong>
+              <select v-model="channelId" required>
+                <option disabled value="">Select a channel</option>
+                <option
+                    v-for="channel in channels"
+                    :key="channel.id"
+                    :value="channel.id"
+                >
+                  #{{ channel.name }}
+                </option>
+              </select>
+            </label>
+            <label>
+              <strong>Color</strong>
+              <span v-if="colorHex" :style="`background-color: ${colorHex}`">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              <input v-model="colorHex" type="color" />
+            </label>
+            <label>
+              <strong>Message</strong>
+              <em class="required">(required)</em>
+              <textarea v-model.trim="description" required></textarea>
+            </label>
+          </fieldset>
+          <fieldset>
+            <legend>Author</legend>
+            <label>
+              <strong>Name</strong>
+              <em class="optional">(optional)</em>
+              <input v-model.trim="author.name" type="text" />
+            </label>
+            <label>
+              <strong>URL</strong>
+              <em class="optional">(optional)</em>
+              <input v-model.trim="author.url" type="url" />
+            </label>
+            <label>
+              <strong>Icon URL</strong>
+              <em class="optional">(optional)</em>
+              <input v-model.trim="author.icon_url" type="url" />
+            </label>
+          </fieldset>
+        </div>
+        <div class="div-wrap">
+          <fieldset>
+            <legend>Title</legend>
+            <label>
+              <strong>Text</strong>
+              <em class="optional">(optional)</em>
+              <input v-model.trim="title" type="text" />
+            </label>
+            <label>
+              <strong>URL</strong>
+              <em class="optional">(optional)</em>
+              <input v-model.trim="titleUrl" type="url" />
+            </label>
+          </fieldset>
+          <fieldset>
+            <legend>Images</legend>
+            <label>
+              <strong>Main Image URL</strong>
+              <em class="optional">(optional)</em>
+              <input v-model.trim="mainImage.url" type="url" />
+            </label>
+            <label>
+              <strong>Thumbnail URL</strong>
+              <em class="optional">(optional)</em>
+              <input v-model.trim="thumbnail.url" type="url" />
+            </label>
+          </fieldset>
+          <fieldset>
+            <legend>Footer</legend>
+            <label>
+              <strong>Text</strong>
+              <em class="optional">(optional)</em>
+              <input v-model.trim="footer.text" type="text" />
+            </label>
+            <label>
+              <strong>Icon URL</strong>
+              <em class="optional">(optional)</em>
+              <input v-model.trim="footer.icon_url" type="url" />
+            </label>
+          </fieldset>
+        </div>
         <label>
           <strong>Timestamp</strong>
           <input v-model="hasTimestamp" type="checkbox" />
         </label>
-
-
-
-
 <!--        <label>-->
 <!--          <strong>Author</strong>-->
 
@@ -173,6 +188,24 @@ form {
   margin: 0 auto;
 }
 
+fieldset {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  text-align: center;
+  font-weight: bold;
+  border: 3px solid $primary;
+  margin: 0.5rem;
+}
+
+.div-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 label {
   display: flex;
   flex-direction: column;
@@ -189,7 +222,7 @@ input {
 }
 
 textarea {
-  width: 300px;
+  width: 100%;
   height: 100px;
   background-color: $primary-light;
   padding: 0.5rem;
