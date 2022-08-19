@@ -30,8 +30,15 @@ currentChannel.value = filteredChannels[0];
   <div class="guild-home">
     <GuildHeader />
     <div v-if="currentGuild.id === guildConfig.guildId">
-      <h3>Current Settings</h3>
+      <h3>Welcome!</h3>
+      <h4>Quick Links:</h4>
       <ul>
+        <li>
+          <RouterLink :to="`${currentGuild.id}/announce`">
+            Announce</RouterLink
+          >:
+          Build an announcement
+        </li>
         <li>
           <RouterLink :to="`${currentGuild.id}/settings/prefix`">
             Command Prefix</RouterLink
@@ -65,7 +72,8 @@ currentChannel.value = filteredChannels[0];
 </template>
 
 <style lang="scss" scoped>
-.center {
+.center,
+h4 {
   text-align: center;
 }
 
