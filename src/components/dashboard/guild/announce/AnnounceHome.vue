@@ -11,8 +11,12 @@ const channelId = ref("");
 const colorHex = ref("#000000");
 const title = ref("");
 const titleUrl = ref("");
-
 const description = ref("");
+const mainImage = ref({});
+const thumbnail = ref({});
+const footer = ref({});
+const author = ref({});
+const hasTimestamp = ref(false);
 const embed = ref({});
 const embeds = ref([]);
 
@@ -21,11 +25,19 @@ const color = computed(() => {
 })
 
 const sendAnnouncement = async () => {
+  if (description.value.length < 1) {
+    return;
+  }
   try {
     const payload = {};
     embed.value.title = title.value;
     embed.value.url = titleUrl.value;
     embed.value.description = description.value;
+    embed.value.image = mainImage.value;
+    embed.value.thumbnail = thumbnail.value;
+    embed.value.footer = footer.value;
+    embed.value.author = author.value;
+    if (hasTimestamp.value) embed.value.timestamp = new Date().toISOString();
     embed.value.color = color.value;
     embeds.value.push(embed.value);
     payload.embeds = embeds.value;
@@ -34,6 +46,11 @@ const sendAnnouncement = async () => {
     channelId.value = "";
     title.value = "";
     description.value = "";
+    mainImage.value = {};
+    thumbnail.value = {};
+    footer.value = {};
+    author.value = {};
+    hasTimestamp.value = false;
     colorHex.value="#000000"
     titleUrl.value = "";
     embeds.value = [];
@@ -71,18 +88,65 @@ const sendAnnouncement = async () => {
         <label>
           <strong>Title</strong>
           <em class="optional">(optional)</em>
-          <input v-model="title" type="text" />
+          <input v-model.trim="title" type="text" />
         </label>
         <label>
           <strong>Title URL</strong>
           <em class="optional">(optional)</em>
-          <input v-model="titleUrl" type="url" />
+          <input v-model.trim="titleUrl" type="url" />
         </label>
         <label>
           <strong>Description</strong>
           <em class="required">(required)</em>
-          <textarea v-model="description" required></textarea>
+          <textarea v-model.trim="description" required></textarea>
         </label>
+        <label>
+          <strong>Main Image URL</strong>
+          <em class="optional">(optional)</em>
+          <input v-model.trim="mainImage.url" type="url" />
+        </label>
+        <label>
+          <strong>Thumbnail URL</strong>
+          <em class="optional">(optional)</em>
+          <input v-model.trim="thumbnail.url" type="url" />
+        </label>
+        <label>
+          <strong>Footer Text</strong>
+          <em class="optional">(optional)</em>
+          <input v-model.trim="footer.text" type="text" />
+        </label>
+        <label>
+          <strong>Footer Icon URL</strong>
+          <em class="optional">(optional)</em>
+          <input v-model.trim="footer.icon_url" type="url" />
+        </label>
+        <label>
+          <strong>Author Name</strong>
+          <em class="optional">(optional)</em>
+          <input v-model.trim="author.name" type="text" />
+        </label>
+        <label>
+          <strong>Author URL</strong>
+          <em class="optional">(optional)</em>
+          <input v-model.trim="author.url" type="url" />
+        </label>
+        <label>
+          <strong>Author Icon URL</strong>
+          <em class="optional">(optional)</em>
+          <input v-model.trim="author.icon_url" type="url" />
+        </label>
+        <label>
+          <strong>Timestamp</strong>
+          <input v-model="hasTimestamp" type="checkbox" />
+        </label>
+
+
+
+
+<!--        <label>-->
+<!--          <strong>Author</strong>-->
+
+<!--        </label>-->
         <button type="submit">SEND</button>
       </form>
 <!--      <div class="embed-preview-container">-->
@@ -156,6 +220,12 @@ em {
 
 .required {
   color: #af1a1a;
+}
+
+input[type=checkbox]{
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
 }
 
 //.embed-preview-container {
