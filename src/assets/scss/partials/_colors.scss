@@ -1,13 +1,13 @@
 // Colors
-$blue: hsla(216.9, 100%, 23.9%, 1);
-$light-blue: hsla(214.3, 26.9%, 79.6%, 1);
-$orange: hsla(19.2, 96.7%, 63.9%, 1);
+$dark-blue: hsla(216.9, 100%, 23.9%, 1);
+$light-blue: hsla(216.9, 100%, 23.9%, 0.5);
+$lighter-blue: hsla(214.3, 26.9%, 79.6%, 1);
 $dark-gray: hsla(0, 0%, 0%, 0.2);
 $light-gray: hsla(0, 0%, 80%, 1);
 
 // Apply to palette
-$primary: $blue;
-$primary-light: $light-blue;
-$accent: $orange;
+$primary: $dark-blue;
+$primary-light: $lighter-blue;
+$accent: $light-blue;
 $link-dark: #000;
 $link-light: #fff;
