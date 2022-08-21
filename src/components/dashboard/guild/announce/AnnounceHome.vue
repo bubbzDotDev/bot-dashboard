@@ -17,12 +17,22 @@ const thumbnail = ref({});
 const footer = ref({});
 const author = ref({});
 const hasTimestamp = ref(false);
+const fields = ref([]);
 const embed = ref({});
 const embeds = ref([]);
 
 const color = computed(() => {
-  return Number('0x' + colorHex.value.substring(1));
-})
+  return Number("0x" + colorHex.value.substring(1));
+});
+
+const addField = () => {
+  fields.value.push({
+    name: "",
+    value: "",
+    inline: false,
+    id: Date.now().toString(36) + Math.random().toString(36),
+  });
+};
 
 const sendAnnouncement = async () => {
   if (description.value.length < 1) {
@@ -37,6 +47,7 @@ const sendAnnouncement = async () => {
     embed.value.thumbnail = thumbnail.value;
     embed.value.footer = footer.value;
     embed.value.author = author.value;
+    embed.value.fields = fields.value;
     if (hasTimestamp.value) embed.value.timestamp = new Date().toISOString();
     embed.value.color = color.value;
     embeds.value.push(embed.value);
@@ -50,8 +61,9 @@ const sendAnnouncement = async () => {
     thumbnail.value = {};
     footer.value = {};
     author.value = {};
+    fields.value = [];
     hasTimestamp.value = false;
-    colorHex.value="#000000"
+    colorHex.value = "#000000";
     titleUrl.value = "";
     embeds.value = [];
     embed.value = {};
@@ -75,9 +87,9 @@ const sendAnnouncement = async () => {
               <select v-model="channelId" required>
                 <option disabled value="">Select a channel</option>
                 <option
-                    v-for="channel in channels"
-                    :key="channel.id"
-                    :value="channel.id"
+                  v-for="channel in channels"
+                  :key="channel.id"
+                  :value="channel.id"
                 >
                   #{{ channel.name }}
                 </option>
@@ -85,7 +97,9 @@ const sendAnnouncement = async () => {
             </label>
             <label>
               <strong>Color</strong>
-              <span v-if="colorHex" :style="`background-color: ${colorHex}`">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              <span v-if="colorHex" :style="`background-color: ${colorHex}`"
+                >&nbsp;&nbsp;&nbsp;&nbsp;</span
+              >
               <input v-model="colorHex" type="color" />
             </label>
             <label>
@@ -154,25 +168,42 @@ const sendAnnouncement = async () => {
             </label>
           </fieldset>
         </div>
+        <fieldset v-if="fields.length > 0" class="fields-wrap">
+          <legend>Fields</legend>
+          <fieldset v-for="field in fields" :key="field.id">
+            <legend>Field {{ fields.indexOf(field) + 1 }}</legend>
+            <label>
+              <strong>Title</strong>
+              <em class="optional">(optional)</em>
+              <input v-model.trim="field.name" type="text" />
+            </label>
+            <label>
+              <strong>Text</strong>
+              <em class="optional">(optional)</em>
+              <input v-model.trim="field.value" type="text" />
+            </label>
+            <label>
+              <strong>Side-By-Side</strong>
+              <input v-model="field.inline" type="checkbox" />
+            </label>
+          </fieldset>
+        </fieldset>
+        <button @click="addField" type="button" class="btn-accent">ADD FIELD</button>
         <label>
           <strong>Timestamp</strong>
           <input v-model="hasTimestamp" type="checkbox" />
         </label>
-<!--        <label>-->
-<!--          <strong>Author</strong>-->
-
-<!--        </label>-->
         <button type="submit">SEND</button>
       </form>
-<!--      <div class="embed-preview-container">-->
-<!--        <div class="embed-left-border"></div>-->
-<!--        <div class="embed-main-section">-->
+      <!--      <div class="embed-preview-container">-->
+      <!--        <div class="embed-left-border"></div>-->
+      <!--        <div class="embed-main-section">-->
 
-<!--        </div>-->
-<!--        <div class="embed-right-section">-->
+      <!--        </div>-->
+      <!--        <div class="embed-right-section">-->
 
-<!--        </div>-->
-<!--      </div>-->
+      <!--        </div>-->
+      <!--      </div>-->
     </div>
   </div>
 </template>
@@ -195,8 +226,7 @@ fieldset {
   align-items: center;
   width: 250px;
   text-align: center;
-  font-weight: bold;
-  border: 3px solid $primary;
+  border: 3px dashed $primary;
   margin: 0.5rem;
 }
 
@@ -204,6 +234,15 @@ fieldset {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.fields-wrap {
+  width: 90%;
+  max-width: 1000px;
+  flex-direction: unset;
+  flex-wrap: wrap;
+  justify-content: center;
+  border: none;
 }
 
 label {
@@ -234,11 +273,7 @@ textarea {
 button {
   width: 100px;
   margin-bottom: 1rem;
-}
-
-.announce-container {
-  //display: flex;
-  //flex-wrap: wrap;
+  margin-top: 1rem;
 }
 
 em {
@@ -255,10 +290,14 @@ em {
   color: #af1a1a;
 }
 
-input[type=checkbox]{
+input[type="checkbox"] {
   height: 20px;
   width: 20px;
   cursor: pointer;
+}
+
+.btn-accent {
+  background-color: $accent;
 }
 
 //.embed-preview-container {
