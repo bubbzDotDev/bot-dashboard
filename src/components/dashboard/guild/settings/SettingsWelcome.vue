@@ -60,6 +60,16 @@ const updateWelcome = async () => {
     console.log(err);
   }
 };
+
+const disableWelcome = async () => {
+  try {
+    welcomeMessage.value = "";
+    currentChannelId.value = "";
+    await guildStore.setWelcome("", "");
+  } catch (err) {
+    console.log(err);
+  }
+};
 </script>
 
 <template>
@@ -98,7 +108,10 @@ const updateWelcome = async () => {
           </option>
         </select>
       </label>
-      <button type="submit">UPDATE</button>
+      <div>
+        <button type="submit">UPDATE</button>
+        <button @click="disableWelcome" v-if="updatedChannel" class="btn-danger" type="button">DISABLE</button>
+      </div>
     </form>
   </div>
 </template>
@@ -151,6 +164,11 @@ textarea {
 
 button {
   width: 100px;
-  margin-bottom: 1rem;
+  margin: 1rem;
+}
+
+.btn-danger {
+  background-color: #af1a1a;
+  opacity: 0.7;
 }
 </style>

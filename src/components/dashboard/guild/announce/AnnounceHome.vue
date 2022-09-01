@@ -34,6 +34,11 @@ const addField = () => {
   });
 };
 
+const removeField = (id) => {
+  const filteredFields = fields.value.filter(field => field.id !== id);
+  fields.value = filteredFields;
+};
+
 const sendAnnouncement = async () => {
   if (description.value.length < 1) {
     return;
@@ -169,7 +174,7 @@ const sendAnnouncement = async () => {
           </fieldset>
         </div>
         <fieldset v-if="fields.length > 0" class="fields-wrap">
-          <legend>Fields</legend>
+          <legend>Field{{ fields.length > 1 ? 's' : '' }}</legend>
           <fieldset v-for="field in fields" :key="field.id">
             <legend>Field {{ fields.indexOf(field) + 1 }}</legend>
             <label>
@@ -186,9 +191,10 @@ const sendAnnouncement = async () => {
               <strong>Side-By-Side</strong>
               <input v-model="field.inline" type="checkbox" />
             </label>
+            <button @click="removeField(field.id)" type="button" class="btn-danger">REMOVE</button>
           </fieldset>
         </fieldset>
-        <button @click="addField" type="button" class="btn-accent">ADD FIELD</button>
+        <button v-if="fields.length < 25" @click="addField" type="button" class="btn-accent">ADD FIELD</button>
         <label>
           <strong>Timestamp</strong>
           <input v-model="hasTimestamp" type="checkbox" />
@@ -237,9 +243,8 @@ fieldset {
 }
 
 .fields-wrap {
-  width: 90%;
-  max-width: 1000px;
-  flex-direction: unset;
+  width: unset;
+  flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
   border: none;
@@ -298,6 +303,11 @@ input[type="checkbox"] {
 
 .btn-accent {
   background-color: $accent;
+}
+
+.btn-danger {
+  background-color: #af1a1a;
+  opacity: 0.7;
 }
 
 //.embed-preview-container {

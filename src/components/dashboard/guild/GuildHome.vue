@@ -39,12 +39,12 @@ currentChannel.value = filteredChannels[0];
           >:
           Build an announcement
         </li>
-        <li>
-          <RouterLink :to="`${currentGuild.id}/settings/prefix`">
-            Command Prefix</RouterLink
-          >:
-          {{ guildConfig.prefix }}
-        </li>
+<!--        <li>-->
+<!--          <RouterLink :to="`${currentGuild.id}/settings/prefix`">-->
+<!--            Command Prefix</RouterLink-->
+<!--          >:-->
+<!--          {{ guildConfig.prefix }}-->
+<!--        </li>-->
         <li>
           <RouterLink :to="`${currentGuild.id}/settings/welcome`">
             Welcome Channel</RouterLink
