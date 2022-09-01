@@ -45,20 +45,20 @@ currentChannel.value = filteredChannels[0];
 <!--          >:-->
 <!--          {{ guildConfig.prefix }}-->
 <!--        </li>-->
-        <li>
-          <RouterLink :to="`${currentGuild.id}/settings/welcome`">
-            Welcome Channel</RouterLink
-          >:
-          <span v-if="!currentChannel">Not configured yet</span>
-          <span v-else>#{{ currentChannel.name }}</span>
-        </li>
-        <li>
-          <RouterLink :to="`${currentGuild.id}/settings/welcome`">
-            Welcome Message</RouterLink
-          >:
-          <span v-if="!guildConfig.welcomeMessage">Not configured yet</span>
-          <span v-else>"{{ guildConfig.welcomeMessage }}"</span>
-        </li>
+<!--        <li>-->
+<!--          <RouterLink :to="`${currentGuild.id}/settings/welcome`">-->
+<!--            Welcome Channel</RouterLink-->
+<!--          >:-->
+<!--          <span v-if="!currentChannel">Not configured yet</span>-->
+<!--          <span v-else>#{{ currentChannel.name }}</span>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <RouterLink :to="`${currentGuild.id}/settings/welcome`">-->
+<!--            Welcome Message</RouterLink-->
+<!--          >:-->
+<!--          <span v-if="!guildConfig.welcomeMessage">Not configured yet</span>-->
+<!--          <span v-else>"{{ guildConfig.welcomeMessage }}"</span>-->
+<!--        </li>-->
       </ul>
     </div>
     <div v-else>
