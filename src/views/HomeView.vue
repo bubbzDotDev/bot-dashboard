@@ -1,6 +1,6 @@
 <script setup>
-import SignIn from "@/components/auth/SignIn.vue";
-import ToDashboard from "@/components/auth/ToDashboard.vue";
+// import SignIn from "@/components/auth/SignIn.vue";
+// import ToDashboard from "@/components/auth/ToDashboard.vue";
 import { onBeforeMount, ref, watch } from "vue";
 import { RouterLink } from "vue-router";
 import { useUserStore } from "@/stores/user";
@@ -32,6 +32,7 @@ watch(
 <template>
   <main>
     <h2>Welcome!</h2>
+    <h3>As of September 1st, 2022, Announcement bot is undergoing maintenance. Please join the support server for more details.</h3>
     <p>
       Announcement Bot (built for
       <a rel="noopener" href="https://discord.com/" target="_blank">Discord</a>
@@ -42,23 +43,23 @@ watch(
       <button>LEARN MORE</button>
     </RouterLink>
 
-    <section
-      v-if="
-        user &&
-        Object.keys(user).length === 0 &&
-        Object.getPrototypeOf(user) === Object.prototype
-      "
-    >
-      <h2>GET STARTED NOW!</h2>
-      <SignIn />
-    </section>
-    <section v-else>
-      <h2>WELCOME BACK!</h2>
-      <ToDashboard
-        :username="user.username"
-        :discriminator="user.discriminator"
-      />
-    </section>
+<!--    <section-->
+<!--      v-if="-->
+<!--        user &&-->
+<!--        Object.keys(user).length === 0 &&-->
+<!--        Object.getPrototypeOf(user) === Object.prototype-->
+<!--      "-->
+<!--    >-->
+<!--      <h2>GET STARTED NOW!</h2>-->
+<!--      <SignIn />-->
+<!--    </section>-->
+<!--    <section v-else>-->
+<!--      <h2>WELCOME BACK!</h2>-->
+<!--      <ToDashboard-->
+<!--        :username="user.username"-->
+<!--        :discriminator="user.discriminator"-->
+<!--      />-->
+<!--    </section>-->
 
     <section>
       <h2>Support Server</h2>
@@ -73,23 +74,23 @@ watch(
       <p>Create a custom embedded message with a simple form!</p>
     </section>
 
-    <section
-      v-if="
-        user &&
-        Object.keys(user).length === 0 &&
-        Object.getPrototypeOf(user) === Object.prototype
-      "
-    >
-      <h2>TRY IT TODAY!</h2>
-      <SignIn />
-    </section>
-    <section v-else>
-      <h2>GLAD TO HAVE YOU BACK!</h2>
-      <ToDashboard
-        :username="user.username"
-        :discriminator="user.discriminator"
-      />
-    </section>
+<!--    <section-->
+<!--      v-if="-->
+<!--        user &&-->
+<!--        Object.keys(user).length === 0 &&-->
+<!--        Object.getPrototypeOf(user) === Object.prototype-->
+<!--      "-->
+<!--    >-->
+<!--      <h2>TRY IT TODAY!</h2>-->
+<!--      <SignIn />-->
+<!--    </section>-->
+<!--    <section v-else>-->
+<!--      <h2>GLAD TO HAVE YOU BACK!</h2>-->
+<!--      <ToDashboard-->
+<!--        :username="user.username"-->
+<!--        :discriminator="user.discriminator"-->
+<!--      />-->
+<!--    </section>-->
   </main>
 </template>
 
