@@ -64,8 +64,8 @@ currentChannel.value = filteredChannels[0];
     <div v-else>
       <h3>Server settings not available</h3>
       <p class="center">
-        Run any command in your server to allow the bot to link up with the
-        dashboard.
+        Run the /help command in your server to allow the bot to link up with
+        the dashboard.
       </p>
     </div>
   </div>
