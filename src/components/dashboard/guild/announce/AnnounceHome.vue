@@ -191,10 +191,10 @@ const sendAnnouncement = async () => {
               <strong>Side-By-Side</strong>
               <input v-model="field.inline" type="checkbox" />
             </label>
-            <button @click="removeField(field.id)" type="button" class="btn-accent">REMOVE</button>
+            <button @click="removeField(field.id)" type="button" class="btn-danger">REMOVE</button>
           </fieldset>
         </fieldset>
-        <button @click="addField" type="button" class="btn-accent">ADD FIELD</button>
+        <button v-if="fields.length < 25" @click="addField" type="button" class="btn-accent">ADD FIELD</button>
         <label>
           <strong>Timestamp</strong>
           <input v-model="hasTimestamp" type="checkbox" />
@@ -303,6 +303,11 @@ input[type="checkbox"] {
 
 .btn-accent {
   background-color: $accent;
+}
+
+.btn-danger {
+  background-color: #af1a1a;
+  opacity: 0.7;
 }
 
 //.embed-preview-container {

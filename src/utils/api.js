@@ -5,6 +5,8 @@ const API_URL = `${import.meta.env.VITE_API_HOST}/api`;
 
 export const getAuthStatus = () => axios.get(`${API_URL}/auth/status`, CONFIG);
 
+export const getAuthLogout = () => axios.get(`${API_URL}/auth/logout`, CONFIG);
+
 export const getGuilds = () => axios.get(`${API_URL}/discord/guilds`, CONFIG);
 
 export const getGuildConfig = (guildId) =>

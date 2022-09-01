@@ -61,28 +61,16 @@ watch(
     </section>
 
     <section>
-      <h2>Quickly Change Prefix</h2>
-      <div class="gif-container">
-        <img
-          src="@/assets/images/update-prefix-424x262.webp"
-          alt="Demonstrating update prefix feature"
-        />
-      </div>
-    </section>
-
-    <section>
-      <h2>Update Welcome Channel & Message</h2>
-      <div class="gif-container">
-        <img
-          src="@/assets/images/update-welcome-640x480.webp"
-          alt="Demonstrating update welcome channel and message feature"
-        />
-      </div>
+      <h2>Support Server</h2>
+      <p>Get help from the developer team and learn about new features!</p>
+      <a href="https://discord.gg/bMjyskS" target="_blank" rel="noopener">
+        <button type="button">JOIN SERVER</button>
+      </a>
     </section>
 
     <section id="learn">
       <h2>About</h2>
-      <p>Create a custom embedded message with a simple form.</p>
+      <p>Create a custom embedded message with a simple form!</p>
     </section>
 
     <section

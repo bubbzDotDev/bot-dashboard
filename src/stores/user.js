@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { getAuthStatus, getGuilds } from "@/utils/api";
+import { getAuthStatus, getAuthLogout, getGuilds } from "@/utils/api";
 
 export const useUserStore = defineStore({
   id: "user",
@@ -23,6 +23,19 @@ export const useUserStore = defineStore({
       getAuthStatus()
         .then(({ data }) => {
           this.user = data;
+        })
+        .catch((err) => {
+          console.log(err); // Remove for production; add error handling in UI.
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    logUserOut() {
+      this.loading = true;
+      getAuthLogout()
+        .then(() => {
+          this.user = {};
         })
         .catch((err) => {
           console.log(err); // Remove for production; add error handling in UI.
