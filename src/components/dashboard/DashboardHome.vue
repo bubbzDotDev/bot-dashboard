@@ -20,7 +20,7 @@ const permissions = import.meta.env.VITE_DISCORD_PERMISSIONS;
 
 const redirect = () => {
   setTimeout(() => {
-    window.location.href = "http://localhost:3000"; // Update for production
+    window.location.href = "https://www.announcementbot.live";
   }, 5000);
 };
 </script>

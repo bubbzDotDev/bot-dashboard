@@ -1,6 +1,6 @@
 <script setup>
 const redirect = () => {
-  window.location.href = "http://localhost:3001/api/auth/login"; // Update for production
+  window.location.href = "https://api.announcementbot.live/api/auth/login";
 };
 </script>
 
