@@ -1,12 +1,10 @@
 <script setup>
 import { RouterLink } from "vue-router";
-
-const props = defineProps(["username", "discriminator"]);
 </script>
 
 <template>
   <div class="to-dashboard-container">
-    <span>Hi there, {{ props.username }}#{{ props.discriminator }}!</span>
+    <span>Hi there!</span>
     <RouterLink to="/dashboard">
       <button type="button">DASHBOARD</button>
     </RouterLink>
