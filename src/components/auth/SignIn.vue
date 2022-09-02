@@ -1,6 +1,6 @@
 <script setup>
 const redirect = () => {
-  window.location.href = "https://api.announcementbot.live/api/auth/login";
+  window.location.href = `${import.meta.env.VITE_API_HOST}/api/auth/login`;
 };
 </script>
 
