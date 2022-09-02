@@ -20,7 +20,7 @@ const permissions = import.meta.env.VITE_DISCORD_PERMISSIONS;
 
 const redirect = () => {
   setTimeout(() => {
-    window.location.href = "https://www.announcementbot.live";
+    window.location.href = `${import.meta.env.VITE_FRONTEND_HOST}`;
   }, 5000);
 };
 </script>
