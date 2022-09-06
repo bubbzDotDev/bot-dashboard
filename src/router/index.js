@@ -14,7 +14,7 @@ import SettingsWelcome from "@/components/dashboard/guild/settings/SettingsWelco
 import AnnounceHome from "@/components/dashboard/guild/announce/AnnounceHome.vue";
 
 const router = createRouter({
-  history: createWebHistory(`${import.meta.env.VITE_FRONTEND_HOST}`),
+  history: createWebHistory(),
   routes: [
     {
       path: "/",
