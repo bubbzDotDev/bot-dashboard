@@ -10,8 +10,8 @@ const guilds = ref({});
 guilds.value = userStore.getGuilds;
 watch(
   () => userStore.getGuilds,
-  () => {
-    guilds.value = userStore.getGuilds;
+  (newValue) => {
+    guilds.value = newValue;
   }
 );
 
