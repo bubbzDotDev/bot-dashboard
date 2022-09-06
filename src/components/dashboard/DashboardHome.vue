@@ -67,7 +67,7 @@ const redirect = () => {
           <a
             @click="redirect"
             class="guild-card"
-            :href="`https://discord.com/api/oauth2/authorize?client_id=${clientId}&scope=applications.commands%20guilds%20identify%20bot&permissions=${permissions}&guild_id=${availableGuild.id}&disable_guild_select=true`"
+            :href="`https://discord.com/api/oauth2/authorize?client_id=${clientId}&scope=bot&permissions=${permissions}&guild_id=${availableGuild.id}&disable_guild_select=true`"
             target="_blank"
           >
             <p>{{ availableGuild.name }}</p>
