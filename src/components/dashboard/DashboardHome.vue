@@ -29,7 +29,8 @@ const redirect = () => {
   <div
     v-if="
       guilds &&
-      Object.keys(guilds).length === 0 &&
+      Object.keys(guilds.mutualGuilds).length === 0 &&
+      Object.keys(guilds.availableGuilds).length === 0 &&
       Object.getPrototypeOf(guilds) === Object.prototype
     "
   >
