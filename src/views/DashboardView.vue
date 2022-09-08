@@ -37,15 +37,11 @@ if (
 const guilds = ref({});
 guilds.value = userStore.getGuilds;
 
-if (
-  guilds.value &&
-  Object.keys(guilds.value).length === 0 &&
-  Object.getPrototypeOf(guilds.value) === Object.prototype
-) {
-  onBeforeMount(async () => {
-    await userStore.fetchGuilds();
-  });
-}
+
+onBeforeMount(async () => {
+  await userStore.fetchGuilds();
+});
+
 
 watch(
   () => userStore.getGuilds,
