@@ -10,8 +10,8 @@ const user = ref({});
 user.value = userStore.getUser;
 watch(
   () => userStore.getUser,
-  () => {
-    user.value = userStore.getUser;
+  (newValue) => {
+    user.value = newValue;
   }
 );
 
@@ -19,8 +19,8 @@ const userLoading = ref(false);
 userLoading.value = userStore.getLoading;
 watch(
   () => userStore.getLoading,
-  () => {
-    userLoading.value = userStore.getLoading;
+  (newValue) => {
+    userLoading.value = newValue;
   }
 );
 
@@ -45,8 +45,8 @@ onBeforeMount(async () => {
 
 watch(
   () => userStore.getGuilds,
-  () => {
-    guilds.value = userStore.getGuilds;
+  (newValue) => {
+    guilds.value = newValue;
   }
 );
 
@@ -54,8 +54,8 @@ const guildsLoading = ref(false);
 guildsLoading.value = userStore.getGuildsLoading;
 watch(
   () => userStore.getGuildsLoading,
-  () => {
-    guildsLoading.value = userStore.getGuildsLoading;
+  (newValue) => {
+    guildsLoading.value = newValue;
   }
 );
 </script>
