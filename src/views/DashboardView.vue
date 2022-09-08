@@ -36,13 +36,6 @@ if (
 
 const guilds = ref({});
 guilds.value = userStore.getGuilds;
-
-
-onBeforeMount(async () => {
-  await userStore.fetchGuilds();
-});
-
-
 watch(
   () => userStore.getGuilds,
   (newValue) => {
@@ -58,6 +51,20 @@ watch(
     guildsLoading.value = newValue;
   }
 );
+
+if (
+  guilds.value &&
+  Object.keys(guilds.value).length === 0 &&
+  Object.getPrototypeOf(guilds.value) === Object.prototype
+) {
+  onBeforeMount(async () => {
+    try {
+      await userStore.fetchGuilds();
+    } catch (error) {
+      console.log(error);
+    }
+  });
+}
 </script>
 
 <template>
