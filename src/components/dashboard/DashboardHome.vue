@@ -18,7 +18,7 @@ watch(
 const clientId = import.meta.env.VITE_DISCORD_CLIENT_ID;
 const permissions = import.meta.env.VITE_DISCORD_PERMISSIONS;
 
-const redirect = async () => {
+const redirect = () => {
   setTimeout(() => {
     window.location.href = `${import.meta.env.VITE_FRONTEND_HOST}`;
   }, 5000);
