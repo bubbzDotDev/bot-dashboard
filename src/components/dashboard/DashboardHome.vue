@@ -22,11 +22,6 @@ const redirect = async () => {
   setTimeout(() => {
     window.location.href = `${import.meta.env.VITE_FRONTEND_HOST}`;
   }, 5000);
-  try {
-    await userStore.fetchGuilds();
-  } catch (error) {
-    console.log(error);
-  }
 };
 </script>
 
