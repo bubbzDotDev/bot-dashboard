@@ -25,6 +25,9 @@ VITE_API_HOST=
 #Discord
 VITE_DISCORD_CLIENT_ID=
 VITE_DISCORD_PERMISSIONS=
+
+# Frontend
+VITE_FRONTEND_HOST=
 ```
 
 ### Compile and Hot-Reload for Development
