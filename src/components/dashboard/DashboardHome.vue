@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, onBeforeMount } from "vue";
 import { RouterLink } from "vue-router";
 import { useUserStore } from "@/stores/user";
 import { getGuildIconURL } from "@/utils/helpers";
@@ -23,6 +23,20 @@ const redirect = () => {
     window.location.href = `${import.meta.env.VITE_FRONTEND_HOST}`;
   }, 5000);
 };
+
+if (
+  guilds.value &&
+  Object.keys(guilds.value).length === 0 &&
+  Object.getPrototypeOf(guilds.value) === Object.prototype
+) {
+  onBeforeMount(async () => {
+    try {
+      await userStore.fetchGuilds();
+    } catch (error) {
+      console.log(error);
+    }
+  });
+}
 </script>
 
 <template>

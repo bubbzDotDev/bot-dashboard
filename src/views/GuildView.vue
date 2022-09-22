@@ -71,7 +71,7 @@ if (
   (guildConfig.value &&
     Object.keys(guildConfig.value).length === 0 &&
     Object.getPrototypeOf(guildConfig.value) === Object.prototype) ||
-  currentGuild.value.id != guildConfig.value.guildId
+  currentGuild.value.id !== guildConfig.value.guildId
 ) {
   onBeforeMount(async () => {
     await guildStore.fetchGuildConfig();
@@ -89,7 +89,7 @@ watch(
 
 if (
   !channels.value.length ||
-  currentGuild.value.id != guildConfig.value.guildId
+  currentGuild.value.id !== guildConfig.value.guildId
 ) {
   onBeforeMount(async () => {
     await guildStore.fetchGuildChannels();
