@@ -47,13 +47,13 @@ const toggleMenu = (isOpen = null) => {
             >Announce</RouterLink
           >
         </li>
-<!--        <li>-->
-<!--          <RouterLink-->
-<!--            :to="`/dashboard/${guildId}/settings`"-->
-<!--            @click="toggleMenu(false)"-->
-<!--            >Settings</RouterLink-->
-<!--          >-->
-<!--        </li>-->
+        <!--        <li>-->
+        <!--          <RouterLink-->
+        <!--            :to="`/dashboard/${guildId}/settings`"-->
+        <!--            @click="toggleMenu(false)"-->
+        <!--            >Settings</RouterLink-->
+        <!--          >-->
+        <!--        </li>-->
       </ul>
       <MenuButton :menuOpen="menuIsOpen" @toggle-menu="toggleMenu" />
     </nav>

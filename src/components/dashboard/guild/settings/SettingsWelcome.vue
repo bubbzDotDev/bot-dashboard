@@ -110,7 +110,14 @@ const disableWelcome = async () => {
       </label>
       <div>
         <button type="submit">UPDATE</button>
-        <button @click="disableWelcome" v-if="updatedChannel" class="btn-danger" type="button">DISABLE</button>
+        <button
+          @click="disableWelcome"
+          v-if="updatedChannel"
+          class="btn-danger"
+          type="button"
+        >
+          DISABLE
+        </button>
       </div>
     </form>
   </div>

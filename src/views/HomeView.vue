@@ -31,66 +31,67 @@
 
 <template>
   <main>
-<!--    <h2>Welcome!</h2>-->
+    <!--    <h2>Welcome!</h2>-->
     <section>
       <h2>
-        As of September 21st, 2022, Announcement Bot is <span class="red">down</span> until the creator has
-        more time to maintain it.
+        As of September 21st, 2022, Announcement Bot is
+        <span class="red">down</span> until the creator has more time to
+        maintain it.
       </h2>
     </section>
-<!--    <p>-->
-<!--      Announcement Bot (built for-->
-<!--      <a rel="noopener" href="https://discord.com/" target="_blank">Discord</a>-->
-<!--      servers) makes it easy to post <em>embeds</em> for any message you may-->
-<!--      want to create.-->
-<!--    </p>-->
-<!--    <RouterLink to="/#learn">-->
-<!--      <button>LEARN MORE</button>-->
-<!--    </RouterLink>-->
+    <!--    <p>-->
+    <!--      Announcement Bot (built for-->
+    <!--      <a rel="noopener" href="https://discord.com/" target="_blank">Discord</a>-->
+    <!--      servers) makes it easy to post <em>embeds</em> for any message you may-->
+    <!--      want to create.-->
+    <!--    </p>-->
+    <!--    <RouterLink to="/#learn">-->
+    <!--      <button>LEARN MORE</button>-->
+    <!--    </RouterLink>-->
 
-<!--    <section-->
-<!--      v-if="-->
-<!--        user &&-->
-<!--        Object.keys(user).length === 0 &&-->
-<!--        Object.getPrototypeOf(user) === Object.prototype-->
-<!--      "-->
-<!--    >-->
-<!--      <h2>GET STARTED NOW!</h2>-->
-<!--      <SignIn />-->
-<!--    </section>-->
-<!--    <section v-else>-->
-<!--      <h2>WELCOME BACK!</h2>-->
-<!--      <ToDashboard />-->
-<!--    </section>-->
+    <!--    <section-->
+    <!--      v-if="-->
+    <!--        user &&-->
+    <!--        Object.keys(user).length === 0 &&-->
+    <!--        Object.getPrototypeOf(user) === Object.prototype-->
+    <!--      "-->
+    <!--    >-->
+    <!--      <h2>GET STARTED NOW!</h2>-->
+    <!--      <SignIn />-->
+    <!--    </section>-->
+    <!--    <section v-else>-->
+    <!--      <h2>WELCOME BACK!</h2>-->
+    <!--      <ToDashboard />-->
+    <!--    </section>-->
 
     <section>
       <h2>Support Server</h2>
-<!--      <p>Get help from the developer team and learn about new features!</p>-->
+      <!--      <p>Get help from the developer team and learn about new features!</p>-->
       <p>Be the first to know when Announcement Bot is back online!</p>
       <a href="https://discord.gg/bMjyskS" target="_blank" rel="noopener">
         <button type="button">JOIN SERVER</button>
       </a>
     </section>
 
-<!--    <section id="learn">-->
-<!--      <h2>About</h2>-->
-<!--      <p>Create a custom embedded message with a simple form!</p>-->
-<!--    </section>-->
+    <!--    <section id="learn">-->
+    <!--      <h2>About</h2>-->
+    <!--      <p>Create a custom embedded message with a simple form!</p>-->
+    <!--    </section>-->
 
-<!--    <section-->
-<!--      v-if="-->
-<!--        user &&-->
-<!--        Object.keys(user).length === 0 &&-->
-<!--        Object.getPrototypeOf(user) === Object.prototype-->
-<!--      "-->
-<!--    >-->
-<!--      <h2>TRY IT TODAY!</h2>-->
-<!--      <SignIn />-->
-<!--    </section>-->
-<!--    <section v-else>-->
-<!--      <h2>GLAD TO HAVE YOU BACK!</h2>-->
-<!--      <ToDashboard />-->
-<!--    </section>-->
+    <!--    <section-->
+    <!--      v-if="-->
+    <!--        user &&-->
+    <!--        Object.keys(user).length === 0 &&-->
+    <!--        Object.getPrototypeOf(user) === Object.prototype-->
+    <!--      "-->
+    <!--    >-->
+    <!--      <h2>TRY IT TODAY!</h2>-->
+    <!--      <SignIn />-->
+    <!--    </section>-->
+    <!--    <section v-else>-->
+    <!--      <h2>GLAD TO HAVE YOU BACK!</h2>-->
+    <!--      <ToDashboard />-->
+    <!--    </section>-->
   </main>
 </template>
 

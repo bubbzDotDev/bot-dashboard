@@ -6,11 +6,11 @@ import { RouterLink } from "vue-router";
   <div>
     <h3>Settings</h3>
     <ul>
-<!--      <li>-->
-<!--        <RouterLink to="settings/prefix" class="setting-card"-->
-<!--          >Command Prefix</RouterLink-->
-<!--        >-->
-<!--      </li>-->
+      <!--      <li>-->
+      <!--        <RouterLink to="settings/prefix" class="setting-card"-->
+      <!--          >Command Prefix</RouterLink-->
+      <!--        >-->
+      <!--      </li>-->
       <li>
         <RouterLink to="settings/welcome" class="setting-card"
           >Welcome</RouterLink
