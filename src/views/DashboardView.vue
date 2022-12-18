@@ -10,8 +10,8 @@ const user = ref({});
 user.value = userStore.getUser;
 watch(
   () => userStore.getUser,
-  () => {
-    user.value = userStore.getUser;
+  (newValue) => {
+    user.value = newValue;
   }
 );
 
@@ -19,8 +19,8 @@ const userLoading = ref(false);
 userLoading.value = userStore.getLoading;
 watch(
   () => userStore.getLoading,
-  () => {
-    userLoading.value = userStore.getLoading;
+  (newValue) => {
+    userLoading.value = newValue;
   }
 );
 
@@ -36,21 +36,10 @@ if (
 
 const guilds = ref({});
 guilds.value = userStore.getGuilds;
-
-if (
-  guilds.value &&
-  Object.keys(guilds.value).length === 0 &&
-  Object.getPrototypeOf(guilds.value) === Object.prototype
-) {
-  onBeforeMount(async () => {
-    await userStore.fetchGuilds();
-  });
-}
-
 watch(
   () => userStore.getGuilds,
-  () => {
-    guilds.value = userStore.getGuilds;
+  (newValue) => {
+    guilds.value = newValue;
   }
 );
 
@@ -58,8 +47,8 @@ const guildsLoading = ref(false);
 guildsLoading.value = userStore.getGuildsLoading;
 watch(
   () => userStore.getGuildsLoading,
-  () => {
-    guildsLoading.value = userStore.getGuildsLoading;
+  (newValue) => {
+    guildsLoading.value = newValue;
   }
 );
 </script>

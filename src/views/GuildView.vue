@@ -14,8 +14,8 @@ const guildConfig = ref({});
 guildConfig.value = guildStore.getConfig;
 watch(
   () => guildStore.getConfig,
-  () => {
-    guildConfig.value = guildStore.getConfig;
+  (newValue) => {
+    guildConfig.value = newValue;
   }
 );
 
@@ -23,8 +23,8 @@ const channelsLoading = ref(false);
 channelsLoading.value = guildStore.getChannelsLoading;
 watch(
   () => guildStore.getChannelsLoading,
-  () => {
-    channelsLoading.value = guildStore.getChannelsLoading;
+  (newValue) => {
+    channelsLoading.value = newValue;
   }
 );
 
@@ -32,8 +32,8 @@ const configLoading = ref(false);
 configLoading.value = guildStore.getConfigLoading;
 watch(
   () => guildStore.getConfigLoading,
-  () => {
-    configLoading.value = guildStore.getConfigLoading;
+  (newValue) => {
+    configLoading.value = newValue;
   }
 );
 
@@ -41,28 +41,18 @@ const guildsLoading = ref(false);
 guildsLoading.value = userStore.getGuildsLoading;
 watch(
   () => userStore.getGuildsLoading,
-  () => {
-    guildsLoading.value = userStore.getGuildsLoading;
+  (newValue) => {
+    guildsLoading.value = newValue;
   }
 );
 
 const guilds = ref({});
 guilds.value = userStore.getGuilds;
 
-if (
-  guilds.value &&
-  Object.keys(guilds.value).length === 0 &&
-  Object.getPrototypeOf(guilds.value) === Object.prototype
-) {
-  onBeforeMount(async () => {
-    await userStore.fetchGuilds();
-  });
-}
-
 watch(
   () => userStore.getGuilds,
-  () => {
-    guilds.value = userStore.getGuilds;
+  (newValue) => {
+    guilds.value = newValue;
   }
 );
 
@@ -74,14 +64,14 @@ const matchingMutualGuild = guilds.value.mutualGuilds.filter(
 );
 
 const currentGuild = ref({});
-currentGuild.value = matchingMutualGuild[0];
+[currentGuild.value] = matchingMutualGuild;
 guildStore.setGuild(currentGuild.value);
 
 if (
   (guildConfig.value &&
     Object.keys(guildConfig.value).length === 0 &&
     Object.getPrototypeOf(guildConfig.value) === Object.prototype) ||
-  currentGuild.value.id != guildConfig.value.guildId
+  currentGuild.value.id !== guildConfig.value.guildId
 ) {
   onBeforeMount(async () => {
     await guildStore.fetchGuildConfig();
@@ -92,14 +82,14 @@ const channels = ref([]);
 channels.value = guildStore.getChannels;
 watch(
   () => guildStore.getChannels,
-  () => {
-    channels.value = guildStore.getChannels;
+  (newValue) => {
+    channels.value = newValue;
   }
 );
 
 if (
   !channels.value.length ||
-  currentGuild.value.id != guildConfig.value.guildId
+  currentGuild.value.id !== guildConfig.value.guildId
 ) {
   onBeforeMount(async () => {
     await guildStore.fetchGuildChannels();

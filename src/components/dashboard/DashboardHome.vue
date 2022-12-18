@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, onBeforeMount } from "vue";
 import { RouterLink } from "vue-router";
 import { useUserStore } from "@/stores/user";
 import { getGuildIconURL } from "@/utils/helpers";
@@ -10,8 +10,8 @@ const guilds = ref({});
 guilds.value = userStore.getGuilds;
 watch(
   () => userStore.getGuilds,
-  () => {
-    guilds.value = userStore.getGuilds;
+  (newValue) => {
+    guilds.value = newValue;
   }
 );
 
@@ -23,13 +23,28 @@ const redirect = () => {
     window.location.href = `${import.meta.env.VITE_FRONTEND_HOST}`;
   }, 5000);
 };
+
+if (
+  guilds.value &&
+  Object.keys(guilds.value).length === 0 &&
+  Object.getPrototypeOf(guilds.value) === Object.prototype
+) {
+  onBeforeMount(async () => {
+    try {
+      await userStore.fetchGuilds();
+    } catch (error) {
+      console.log(error);
+    }
+  });
+}
 </script>
 
 <template>
   <div
     v-if="
       guilds &&
-      Object.keys(guilds).length === 0 &&
+      Object.keys(guilds.mutualGuilds).length === 0 &&
+      Object.keys(guilds.availableGuilds).length === 0 &&
       Object.getPrototypeOf(guilds) === Object.prototype
     "
   >
@@ -67,7 +82,7 @@ const redirect = () => {
           <a
             @click="redirect"
             class="guild-card"
-            :href="`https://discord.com/api/oauth2/authorize?client_id=${clientId}&scope=applications.commands%20identify%20bot&permissions=${permissions}&guild_id=${availableGuild.id}&disable_guild_select=true`"
+            :href="`https://discord.com/api/oauth2/authorize?client_id=${clientId}&scope=bot&permissions=${permissions}&guild_id=${availableGuild.id}&disable_guild_select=true`"
             target="_blank"
           >
             <p>{{ availableGuild.name }}</p>
