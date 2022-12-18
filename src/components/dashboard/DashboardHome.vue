@@ -45,7 +45,7 @@ if (
     (guilds.mutualGuilds || guilds.availableGuilds) &&
     (Object.keys(guilds.mutualGuilds).length > 0 || Object.keys(guilds.availableGuilds).length > 0)
   ">
-    <div v-if="guilds.mutualGuilds.length">
+    <div v-if="guilds.mutualGuilds && guilds.mutualGuilds.length">
       <h2>Manage Bot</h2>
       <div class="guild-card-container">
         <div v-for="mutualGuild in guilds.mutualGuilds" :key="mutualGuild.id">
@@ -63,7 +63,7 @@ if (
         </div>
       </div>
     </div>
-    <div v-if="guilds.availableGuilds.length">
+    <div v-if="guilds.availableGuilds && guilds.availableGuilds.length">
       <h2>Add Bot</h2>
       <div class="guild-card-container">
         <div
