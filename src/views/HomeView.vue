@@ -32,10 +32,6 @@ watch(
 <template>
   <main>
     <h2>Welcome!</h2>
-    <h3>
-      As of September 1st, 2022, Announcement Bot is undergoing maintenance.
-      Please join the support server for more details.
-    </h3>
     <p>
       Announcement Bot (built for
       <a rel="noopener" href="https://discord.com/" target="_blank">Discord</a>

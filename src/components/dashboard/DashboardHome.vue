@@ -1,17 +1,17 @@
 <script setup>
-import { ref, watch, onBeforeMount } from "vue";
+import { reactive, watch, onBeforeMount } from "vue";
 import { RouterLink } from "vue-router";
 import { useUserStore } from "@/stores/user";
 import { getGuildIconURL } from "@/utils/helpers";
 
 const userStore = useUserStore();
 
-const guilds = ref({});
-guilds.value = userStore.getGuilds;
+let guilds = reactive({});
+guilds = userStore.getGuilds;
 watch(
   () => userStore.getGuilds,
   (newValue) => {
-    guilds.value = newValue;
+    guilds = newValue;
   }
 );
 
@@ -25,9 +25,9 @@ const redirect = () => {
 };
 
 if (
-  guilds.value &&
-  Object.keys(guilds.value).length === 0 &&
-  Object.getPrototypeOf(guilds.value) === Object.prototype
+  guilds &&
+  Object.keys(guilds).length === 0 &&
+  Object.getPrototypeOf(guilds) === Object.prototype
 ) {
   onBeforeMount(async () => {
     try {
@@ -40,20 +40,11 @@ if (
 </script>
 
 <template>
-  <div
-    v-if="
-      guilds &&
-      Object.keys(guilds.mutualGuilds).length === 0 &&
-      Object.keys(guilds.availableGuilds).length === 0 &&
-      Object.getPrototypeOf(guilds) === Object.prototype
-    "
-  >
-    <h2>
-      No servers yet. Create one on
-      <a rel="noopener" href="https://discord.com/" target="_blank">Discord</a>!
-    </h2>
-  </div>
-  <div v-else>
+  <div v-if="
+    guilds &&
+    (guilds.mutualGuilds || guilds.availableGuilds) &&
+    (Object.keys(guilds.mutualGuilds).length > 0 || Object.keys(guilds.availableGuilds).length > 0)
+  ">
     <div v-if="guilds.mutualGuilds.length">
       <h2>Manage Bot</h2>
       <div class="guild-card-container">
@@ -98,6 +89,13 @@ if (
         </div>
       </div>
     </div>
+  </div>
+
+  <div v-else>
+    <h2>
+      No servers yet. Create one on
+      <a rel="noopener" href="https://discord.com/" target="_blank">Discord</a>!
+    </h2>
   </div>
 </template>
 
