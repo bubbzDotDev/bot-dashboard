@@ -89,6 +89,7 @@ const sendAnnouncement = async () => {
             <legend>Basic Info</legend>
             <label>
               <strong>Channel</strong>
+              <em class="required">(required)</em>
               <select v-model="channelId" required>
                 <option disabled value="">Select a channel</option>
                 <option

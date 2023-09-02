@@ -12,7 +12,7 @@ watch(
   () => userStore.getGuilds,
   (newValue) => {
     guilds = newValue;
-  }
+  },
 );
 
 const clientId = import.meta.env.VITE_DISCORD_CLIENT_ID;
@@ -40,11 +40,14 @@ if (
 </script>
 
 <template>
-  <div v-if="
-    guilds &&
-    (guilds.mutualGuilds || guilds.availableGuilds) &&
-    (Object.keys(guilds.mutualGuilds).length > 0 || Object.keys(guilds.availableGuilds).length > 0)
-  ">
+  <div
+    v-if="
+      guilds &&
+      (guilds.mutualGuilds || guilds.availableGuilds) &&
+      (Object.keys(guilds.mutualGuilds).length > 0 ||
+        Object.keys(guilds.availableGuilds).length > 0)
+    "
+  >
     <div v-if="guilds.mutualGuilds && guilds.mutualGuilds.length">
       <h2>Manage Bot</h2>
       <div class="guild-card-container">
