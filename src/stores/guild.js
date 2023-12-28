@@ -10,8 +10,8 @@ import {
 export const useGuildStore = defineStore({
   id: "guild",
   state: () => ({
-    guild: {},
-    config: {},
+    guild: null,
+    config: null,
     channels: [],
     configLoading: false,
     prefixLoading: false,
@@ -36,7 +36,7 @@ export const useGuildStore = defineStore({
     fetchGuildConfig() {
       this.configLoading = true;
       getGuildConfig(this.guild.id)
-        .then(({ data }) => {
+        .then((data) => {
           this.config = data;
         })
         .catch((err) => {
@@ -49,7 +49,7 @@ export const useGuildStore = defineStore({
     setGuildPrefix(prefix) {
       this.prefixLoading = true;
       updateGuildPrefix(this.guild.id, prefix)
-        .then(({ data }) => {
+        .then((data) => {
           this.config = data;
         })
         .catch((err) => {
@@ -62,7 +62,7 @@ export const useGuildStore = defineStore({
     fetchGuildChannels() {
       this.channelsLoading = true;
       getGuildChannels(this.guild.id)
-        .then(({ data }) => {
+        .then((data) => {
           this.channels = data;
         })
         .catch((err) => {
@@ -75,7 +75,7 @@ export const useGuildStore = defineStore({
     setWelcome(welcomeChannelId, welcomeMessage) {
       this.welcomeLoading = true;
       updateWelcomeChannel(this.guild.id, welcomeChannelId, welcomeMessage)
-        .then(({ data }) => {
+        .then((data) => {
           this.config = data;
         })
         .catch((err) => {

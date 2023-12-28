@@ -32,7 +32,7 @@ watch(
 
     updatedChannel.value = filteredChannelsUpdated[0];
     updatedWelcomeMessage.value = guildConfig.value.welcomeMessage;
-  }
+  },
 );
 
 const channels = ref([]);

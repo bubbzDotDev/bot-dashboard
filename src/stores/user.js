@@ -4,9 +4,9 @@ import { getAuthStatus, getAuthLogout, getGuilds } from "@/utils/api";
 export const useUserStore = defineStore({
   id: "user",
   state: () => ({
-    user: {},
+    user: null,
     loading: false,
-    guilds: {},
+    guilds: null,
     guildsLoading: false,
     menuIsOpen: false,
   }),
@@ -21,7 +21,7 @@ export const useUserStore = defineStore({
     fetchUserStatus() {
       this.loading = true;
       getAuthStatus()
-        .then(({ data }) => {
+        .then((data) => {
           this.user = data;
         })
         .catch((err) => {
@@ -35,7 +35,7 @@ export const useUserStore = defineStore({
       this.loading = true;
       getAuthLogout()
         .then(() => {
-          this.user = {};
+          this.user = null;
         })
         .catch((err) => {
           console.log(err); // Remove for production; add error handling in UI.
@@ -47,7 +47,7 @@ export const useUserStore = defineStore({
     fetchGuilds() {
       this.guildsLoading = true;
       getGuilds()
-        .then(({ data }) => {
+        .then((data) => {
           this.guilds = data;
         })
         .catch((err) => {

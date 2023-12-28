@@ -10,7 +10,7 @@ watch(
   () => userStore.getUser,
   (newValue) => {
     user.value = newValue;
-  }
+  },
 );
 
 const logout = async () => {

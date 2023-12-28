@@ -1,32 +1,13 @@
 <script setup>
 import SignIn from "@/components/auth/SignIn.vue";
 import ToDashboard from "@/components/auth/ToDashboard.vue";
-import { onBeforeMount, ref, watch } from "vue";
+import { computed } from "vue";
 import { RouterLink } from "vue-router";
 import { useUserStore } from "@/stores/user";
 
 const userStore = useUserStore();
 
-const user = ref({});
-
-user.value = userStore.getUser;
-
-if (
-  user.value &&
-  Object.keys(user.value).length === 0 &&
-  Object.getPrototypeOf(user.value) === Object.prototype
-) {
-  onBeforeMount(async () => {
-    await userStore.fetchUserStatus();
-  });
-}
-
-watch(
-  () => userStore.getUser,
-  () => {
-    user.value = userStore.getUser;
-  },
-);
+const user = computed(() => userStore.getUser);
 </script>
 
 <template>
@@ -42,13 +23,7 @@ watch(
       <button>LEARN MORE</button>
     </RouterLink>
 
-    <section
-      v-if="
-        user &&
-        Object.keys(user).length === 0 &&
-        Object.getPrototypeOf(user) === Object.prototype
-      "
-    >
+    <section v-if="!user">
       <h2>GET STARTED NOW!</h2>
       <SignIn />
     </section>
@@ -70,13 +45,7 @@ watch(
       <p>Create a custom embedded message with a simple form!</p>
     </section>
 
-    <section
-      v-if="
-        user &&
-        Object.keys(user).length === 0 &&
-        Object.getPrototypeOf(user) === Object.prototype
-      "
-    >
+    <section v-if="!user">
       <h2>TRY IT TODAY!</h2>
       <SignIn />
     </section>

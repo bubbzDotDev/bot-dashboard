@@ -21,13 +21,15 @@ npm install
 ```sh
 # Server
 VITE_API_HOST=
+(Locally, it will be http://localhost:3001)
 
-#Discord
+# Discord
 VITE_DISCORD_CLIENT_ID=
 VITE_DISCORD_PERMISSIONS=
 
 # Frontend
 VITE_FRONTEND_HOST=
+(Locally, it will be http://localhost:5173)
 ```
 
 ### Compile and Hot-Reload for Development

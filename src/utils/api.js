@@ -1,48 +1,83 @@
-import axios from "axios";
+const apiUrl = `${import.meta.env.VITE_API_HOST}/api`;
+const getOptions = {
+  headers: {
+    "Content-Type": "application/json",
+  },
+  credentials: "include",
+};
 
-const CONFIG = { withCredentials: true };
-const API_URL = `${import.meta.env.VITE_API_HOST}/api`;
+export async function getAuthStatus() {
+  const response = await fetch(`${apiUrl}/auth/status`, getOptions);
+  return response.json();
+}
 
-export const getAuthStatus = () => axios.get(`${API_URL}/auth/status`, CONFIG);
+export async function getAuthLogout() {
+  const response = await fetch(`${apiUrl}/auth/logout`, getOptions);
+  return response.json();
+}
 
-export const getAuthLogout = () => axios.get(`${API_URL}/auth/logout`, CONFIG);
+export async function getGuilds() {
+  const response = await fetch(`${apiUrl}/discord/guilds`, getOptions);
+  return response.json();
+}
 
-export const getGuilds = () => axios.get(`${API_URL}/discord/guilds`, CONFIG);
-
-export const getGuildConfig = (guildId) =>
-  axios.get(`${API_URL}/guilds/${guildId}/config`, CONFIG);
-
-export const updateGuildPrefix = (guildId, prefix) =>
-  axios.post(
-    `${API_URL}/guilds/${guildId}/config/prefix`,
-    {
-      prefix,
-    },
-    CONFIG
+export async function getGuildConfig(guildId) {
+  const response = await fetch(
+    `${apiUrl}/guilds/${guildId}/config`,
+    getOptions,
   );
+  return response.json();
+}
 
-export const getGuildChannels = (guildId) =>
-  axios.get(`${API_URL}/discord/guilds/${guildId}/channels`, CONFIG);
+export async function getGuildChannels(guildId) {
+  const response = await fetch(
+    `${apiUrl}/discord/guilds/${guildId}/channels`,
+    getOptions,
+  );
+  return response.json();
+}
 
-export const updateWelcomeChannel = (
+export async function updateGuildPrefix(guildId, prefix) {
+  const response = await fetch(`${apiUrl}/guilds/${guildId}/config/prefix`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({
+      prefix,
+    }),
+  });
+  return response.json();
+}
+
+export async function updateWelcomeChannel(
   guildId,
   welcomeChannelId,
-  welcomeMessage
-) =>
-  axios.post(
-    `${API_URL}/guilds/${guildId}/config/welcome`,
-    {
+  welcomeMessage,
+) {
+  const response = await fetch(`${apiUrl}/guilds/${guildId}/config/welcome`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({
       welcomeChannelId,
       welcomeMessage,
-    },
-    CONFIG
-  );
+    }),
+  });
+  return response.json();
+}
 
-export const sendAnnouncement = (payload) =>
-  axios.post(
-    `${API_URL}/guilds/${payload.guildId}/announce`,
-    {
-      payload,
+export async function sendAnnouncement(payload) {
+  const response = await fetch(`${apiUrl}/guilds/${payload.guildId}/announce`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
     },
-    CONFIG
-  );
+    credentials: "include",
+    body: JSON.stringify({ payload }),
+  });
+  return response.json();
+}

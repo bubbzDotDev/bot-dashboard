@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, ref, watch } from "vue";
+import { computed, onBeforeMount, ref, watch } from "vue";
 import { RouterLink, RouterView, useRoute } from "vue-router";
 import { useUserStore } from "@/stores/user";
 import { useGuildStore } from "@/stores/guild";
@@ -10,90 +10,35 @@ const guildStore = useGuildStore();
 
 const route = useRoute();
 
-const guildConfig = ref({});
-guildConfig.value = guildStore.getConfig;
-watch(
-  () => guildStore.getConfig,
-  (newValue) => {
-    guildConfig.value = newValue;
-  }
-);
+const guildConfig = computed(() => guildStore.getConfig);
+const channelsLoading = computed(() => guildStore.getChannelsLoading);
+const configLoading = computed(() => guildStore.getConfigLoading);
 
-const channelsLoading = ref(false);
-channelsLoading.value = guildStore.getChannelsLoading;
-watch(
-  () => guildStore.getChannelsLoading,
-  (newValue) => {
-    channelsLoading.value = newValue;
-  }
-);
-
-const configLoading = ref(false);
-configLoading.value = guildStore.getConfigLoading;
-watch(
-  () => guildStore.getConfigLoading,
-  (newValue) => {
-    configLoading.value = newValue;
-  }
-);
-
-const guildsLoading = ref(false);
-guildsLoading.value = userStore.getGuildsLoading;
-watch(
-  () => userStore.getGuildsLoading,
-  (newValue) => {
-    guildsLoading.value = newValue;
-  }
-);
-
-const guilds = ref({});
-guilds.value = userStore.getGuilds;
-
-watch(
-  () => userStore.getGuilds,
-  (newValue) => {
-    guilds.value = newValue;
-  }
-);
+const guildsLoading = computed(() => userStore.getGuildsLoading);
+const guilds = computed(() => userStore.getGuilds);
 
 const mutualGuildId = ref("");
 mutualGuildId.value = route.params.id;
 
 const matchingMutualGuild = guilds.value.mutualGuilds.filter(
-  (mutualGuild) => mutualGuild.id === mutualGuildId.value
+  (mutualGuild) => mutualGuild.id === mutualGuildId.value,
 );
 
 const currentGuild = ref({});
 [currentGuild.value] = matchingMutualGuild;
 guildStore.setGuild(currentGuild.value);
 
-if (
-  (guildConfig.value &&
-    Object.keys(guildConfig.value).length === 0 &&
-    Object.getPrototypeOf(guildConfig.value) === Object.prototype) ||
-  currentGuild.value.id !== guildConfig.value.guildId
-) {
-  onBeforeMount(async () => {
-    await guildStore.fetchGuildConfig();
-  });
+if (!guildConfig.value || currentGuild.value.id !== guildConfig.value.guildId) {
+  guildStore.fetchGuildConfig();
 }
 
-const channels = ref([]);
-channels.value = guildStore.getChannels;
-watch(
-  () => guildStore.getChannels,
-  (newValue) => {
-    channels.value = newValue;
-  }
-);
+const channels = computed(() => guildStore.getChannels);
 
 if (
   !channels.value.length ||
   currentGuild.value.id !== guildConfig.value.guildId
 ) {
-  onBeforeMount(async () => {
-    await guildStore.fetchGuildChannels();
-  });
+  guildStore.fetchGuildChannels();
 }
 </script>
 
@@ -102,14 +47,7 @@ if (
     <h2>Loading...</h2>
   </div>
   <div v-else>
-    <div
-      v-if="
-        currentGuild &&
-        Object.keys(currentGuild).length === 0 &&
-        Object.getPrototypeOf(currentGuild) === Object.prototype
-      "
-      class="center"
-    >
+    <div v-if="!currentGuild" class="center">
       <h2>Could not find server.</h2>
       <RouterLink to="/dashboard">
         <button type="button">DASHBOARD</button>

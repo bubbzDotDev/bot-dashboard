@@ -35,8 +35,7 @@ const addField = () => {
 };
 
 const removeField = (id) => {
-  const filteredFields = fields.value.filter((field) => field.id !== id);
-  fields.value = filteredFields;
+  fields.value = fields.value.filter((field) => field.id !== id);
 };
 
 const sendAnnouncement = async () => {
@@ -104,7 +103,7 @@ const sendAnnouncement = async () => {
             <label>
               <strong>Color</strong>
               <span v-if="colorHex" :style="`background-color: ${colorHex}`"
-                >&nbsp;&nbsp;&nbsp;&nbsp;</span
+                >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span
               >
               <input v-model="colorHex" type="color" />
             </label>
