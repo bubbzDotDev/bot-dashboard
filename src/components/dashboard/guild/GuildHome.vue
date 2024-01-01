@@ -1,29 +1,21 @@
 <script setup>
-import { ref } from "vue";
+import { computed } from "vue";
 import { RouterLink } from "vue-router";
 import { useGuildStore } from "@/stores/guild";
 import GuildHeader from "@/components/dashboard/guild/GuildHeader.vue";
 
 const guildStore = useGuildStore();
 
-const guildConfig = ref({});
-guildConfig.value = guildStore.getConfig;
+const guildConfig = computed(() => guildStore.getConfig);
+const currentGuild = computed(() => guildStore.getGuild);
+// const channels = computed(() => guildStore.getChannels);
 
-const currentGuild = ref({});
-currentGuild.value = guildStore.getGuild;
+// const currentChannelId = ref("");
+// currentChannelId.value = guildConfig.value.welcomeChannelId;
 
-const channels = ref([]);
-channels.value = guildStore.getChannels;
-
-const currentChannelId = ref("");
-currentChannelId.value = guildConfig.value.welcomeChannelId;
-
-const filteredChannels = channels.value.filter(
-  (channel) => currentChannelId.value === channel.id
-);
-
-const currentChannel = ref({});
-currentChannel.value = filteredChannels[0];
+// const currentChannel = channels.value.find(
+//   (channel) => currentChannelId.value === channel.id,
+// );
 </script>
 
 <template>

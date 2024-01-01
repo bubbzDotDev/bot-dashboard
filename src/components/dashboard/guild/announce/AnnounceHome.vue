@@ -4,8 +4,7 @@ import { useGuildStore } from "@/stores/guild";
 import GuildHeader from "@/components/dashboard/guild/GuildHeader.vue";
 
 const guildStore = useGuildStore();
-const channels = ref([]);
-channels.value = guildStore.getChannels;
+const channels = computed(() => guildStore.getChannels);
 
 const channelId = ref("");
 const colorHex = ref("#000000");
@@ -38,43 +37,41 @@ const removeField = (id) => {
   fields.value = fields.value.filter((field) => field.id !== id);
 };
 
-const sendAnnouncement = async () => {
+async function sendAnnouncement() {
   if (description.value.length < 1) {
     return;
   }
-  try {
-    const payload = {};
-    embed.value.title = title.value;
-    embed.value.url = titleUrl.value;
-    embed.value.description = description.value;
-    embed.value.image = mainImage.value;
-    embed.value.thumbnail = thumbnail.value;
-    embed.value.footer = footer.value;
-    embed.value.author = author.value;
-    embed.value.fields = fields.value;
-    if (hasTimestamp.value) embed.value.timestamp = new Date().toISOString();
-    embed.value.color = color.value;
-    embeds.value.push(embed.value);
-    payload.embeds = embeds.value;
-    payload.channelId = channelId.value;
-    await guildStore.announce(payload);
-    channelId.value = "";
-    title.value = "";
-    description.value = "";
-    mainImage.value = {};
-    thumbnail.value = {};
-    footer.value = {};
-    author.value = {};
-    fields.value = [];
-    hasTimestamp.value = false;
-    colorHex.value = "#000000";
-    titleUrl.value = "";
-    embeds.value = [];
-    embed.value = {};
-  } catch (err) {
-    console.log(err);
-  }
-};
+  const payload = {};
+  embed.value.title = title.value;
+  embed.value.url = titleUrl.value;
+  embed.value.description = description.value;
+  embed.value.image = mainImage.value;
+  embed.value.thumbnail = thumbnail.value;
+  embed.value.footer = footer.value;
+  embed.value.author = author.value;
+  embed.value.fields = fields.value;
+  if (hasTimestamp.value) embed.value.timestamp = new Date().toISOString();
+  embed.value.color = color.value;
+  embeds.value.push(embed.value);
+  payload.embeds = embeds.value;
+  payload.channelId = channelId.value;
+
+  await guildStore.announce(payload);
+
+  channelId.value = "";
+  title.value = "";
+  description.value = "";
+  mainImage.value = {};
+  thumbnail.value = {};
+  footer.value = {};
+  author.value = {};
+  fields.value = [];
+  hasTimestamp.value = false;
+  colorHex.value = "#000000";
+  titleUrl.value = "";
+  embeds.value = [];
+  embed.value = {};
+}
 </script>
 
 <template>
@@ -110,7 +107,11 @@ const sendAnnouncement = async () => {
             <label>
               <strong>Message</strong>
               <em class="required">(required)</em>
-              <textarea v-model.trim="description" required></textarea>
+              <textarea
+                v-model.trim="description"
+                required
+                maxlength="4096"
+              ></textarea>
             </label>
           </fieldset>
           <fieldset>
@@ -118,7 +119,7 @@ const sendAnnouncement = async () => {
             <label>
               <strong>Name</strong>
               <em class="optional">(optional)</em>
-              <input v-model.trim="author.name" type="text" />
+              <input v-model.trim="author.name" type="text" maxlength="256" />
             </label>
             <label>
               <strong>URL</strong>
@@ -138,7 +139,7 @@ const sendAnnouncement = async () => {
             <label>
               <strong>Text</strong>
               <em class="optional">(optional)</em>
-              <input v-model.trim="title" type="text" />
+              <input v-model.trim="title" type="text" maxlength="256" />
             </label>
             <label>
               <strong>URL</strong>
@@ -164,7 +165,7 @@ const sendAnnouncement = async () => {
             <label>
               <strong>Text</strong>
               <em class="optional">(optional)</em>
-              <input v-model.trim="footer.text" type="text" />
+              <input v-model.trim="footer.text" type="text" maxlength="2048" />
             </label>
             <label>
               <strong>Icon URL</strong>
@@ -180,12 +181,12 @@ const sendAnnouncement = async () => {
             <label>
               <strong>Title</strong>
               <em class="optional">(optional)</em>
-              <input v-model.trim="field.name" type="text" />
+              <input v-model.trim="field.name" type="text" maxlength="256" />
             </label>
             <label>
               <strong>Text</strong>
               <em class="optional">(optional)</em>
-              <input v-model.trim="field.value" type="text" />
+              <input v-model.trim="field.value" type="text" maxlength="1024" />
             </label>
             <label>
               <strong>Side-By-Side</strong>
@@ -208,6 +209,7 @@ const sendAnnouncement = async () => {
         >
           ADD FIELD
         </button>
+        <button v-else type="button" disabled>FIELD LIMIT REACHED</button>
         <label>
           <strong>Timestamp</strong>
           <input v-model="hasTimestamp" type="checkbox" />

@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onBeforeMount, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import { RouterLink, RouterView, useRoute } from "vue-router";
 import { useUserStore } from "@/stores/user";
 import { useGuildStore } from "@/stores/guild";

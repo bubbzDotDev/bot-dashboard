@@ -1,19 +1,12 @@
 <script setup>
-import { reactive, watch, onBeforeMount } from "vue";
+import { computed } from "vue";
 import { RouterLink } from "vue-router";
 import { useUserStore } from "@/stores/user";
 import { getGuildIconURL } from "@/utils/helpers";
 
 const userStore = useUserStore();
 
-let guilds = reactive({});
-guilds = userStore.getGuilds;
-watch(
-  () => userStore.getGuilds,
-  (newValue) => {
-    guilds = newValue;
-  },
-);
+const guilds = computed(() => userStore.getGuilds);
 
 const clientId = import.meta.env.VITE_DISCORD_CLIENT_ID;
 const permissions = import.meta.env.VITE_DISCORD_PERMISSIONS;
@@ -24,18 +17,8 @@ const redirect = () => {
   }, 5000);
 };
 
-if (
-  guilds &&
-  Object.keys(guilds).length === 0 &&
-  Object.getPrototypeOf(guilds) === Object.prototype
-) {
-  onBeforeMount(async () => {
-    try {
-      await userStore.fetchGuilds();
-    } catch (error) {
-      console.log(error);
-    }
-  });
+if (!guilds.value) {
+  userStore.fetchGuilds();
 }
 </script>
 

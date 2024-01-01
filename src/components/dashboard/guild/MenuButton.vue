@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from "vue";
+import { computed } from "vue";
 
 const props = defineProps({
   menuOpen: {
@@ -8,14 +8,16 @@ const props = defineProps({
   },
 });
 
-const menuIsOpen = ref(false);
+// const menuIsOpen = ref(false);
+//
+// watch(
+//   () => props.menuOpen,
+//   (value) => {
+//     value ? (menuIsOpen.value = true) : (menuIsOpen.value = false);
+//   },
+// );
 
-watch(
-  () => props.menuOpen,
-  (value) => {
-    value ? (menuIsOpen.value = true) : (menuIsOpen.value = false);
-  }
-);
+const menuIsOpen = computed(() => props.menuOpen);
 
 const emit = defineEmits(["toggle-menu"]);
 

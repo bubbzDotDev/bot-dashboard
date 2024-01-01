@@ -1,20 +1,12 @@
 <script setup>
-import { ref, watch } from "vue";
+import { computed } from "vue";
 import { RouterView } from "vue-router";
 import { useUserStore } from "@/stores/user";
 import TheHeader from "@/components/layout/TheHeader.vue";
 import TheFooter from "@/components/layout/TheFooter.vue";
 
 const userStore = useUserStore();
-const menuIsOpen = ref(false);
-menuIsOpen.value = userStore.getMenuIsOpen;
-
-watch(
-  () => userStore.getMenuIsOpen,
-  () => {
-    menuIsOpen.value = userStore.getMenuIsOpen;
-  }
-);
+const menuIsOpen = computed(() => userStore.getMenuIsOpen);
 </script>
 
 <template>

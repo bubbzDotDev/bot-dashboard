@@ -1,17 +1,10 @@
 <script setup>
-import { ref, watch } from "vue";
+import { computed } from "vue";
 import { RouterLink } from "vue-router";
 import { useUserStore } from "@/stores/user";
 
 const userStore = useUserStore();
-const user = ref({});
-user.value = userStore.getUser;
-watch(
-  () => userStore.getUser,
-  (newValue) => {
-    user.value = newValue;
-  },
-);
+const user = computed(() => userStore.getUser);
 
 const logout = async () => {
   await userStore.logUserOut();
@@ -31,17 +24,7 @@ const logout = async () => {
 
     <h1>Announcement Bot</h1>
 
-    <button
-      v-if="
-        user &&
-        Object.keys(user).length > 0 &&
-        Object.getPrototypeOf(user) === Object.prototype
-      "
-      @click="logout"
-      type="button"
-    >
-      LOGOUT
-    </button>
+    <button v-if="user" @click="logout" type="button">LOGOUT</button>
   </header>
 </template>
 

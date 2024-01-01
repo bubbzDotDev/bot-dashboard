@@ -1,17 +1,15 @@
 <script setup>
-import { ref, watch } from "vue";
+import { computed, ref } from "vue";
 import { useGuildStore } from "@/stores/guild";
 
 const guildStore = useGuildStore();
 
-const guildConfig = ref({});
+const guildConfig = computed(() => guildStore.getConfig);
 
 const currentChannelId = ref("");
 const updatedChannelId = ref("");
 const welcomeMessage = ref("");
 const updatedWelcomeMessage = ref("");
-
-guildConfig.value = guildStore.getConfig;
 
 currentChannelId.value = guildConfig.value.welcomeChannelId;
 updatedChannelId.value = guildConfig.value.welcomeChannelId;
@@ -20,56 +18,23 @@ updatedWelcomeMessage.value = guildConfig.value.welcomeMessage;
 
 const updatedChannel = ref({});
 
-watch(
-  () => guildStore.getConfig,
-  () => {
-    guildConfig.value = guildStore.getConfig;
-    updatedChannelId.value = guildConfig.value.welcomeChannelId;
+const channels = computed(() => guildStore.getChannels);
 
-    const filteredChannelsUpdated = channels.value.filter(
-      (channel) => updatedChannelId.value === channel.id
-    );
-
-    updatedChannel.value = filteredChannelsUpdated[0];
-    updatedWelcomeMessage.value = guildConfig.value.welcomeMessage;
-  },
+updatedChannel.value = channels.value.find(
+  (channel) => currentChannelId.value === channel.id,
 );
 
-const channels = ref([]);
-channels.value = guildStore.getChannels;
+const loading = computed(() => guildStore.getWelcomeLoading);
 
-const filteredChannels = channels.value.filter(
-  (channel) => currentChannelId.value === channel.id
-);
+async function updateWelcome() {
+  await guildStore.setWelcome(currentChannelId.value, welcomeMessage.value);
+}
 
-updatedChannel.value = filteredChannels[0];
-
-const loading = ref(false);
-loading.value = guildStore.getWelcomeLoading;
-watch(
-  () => guildStore.getWelcomeLoading,
-  () => {
-    loading.value = guildStore.getWelcomeLoading;
-  }
-);
-
-const updateWelcome = async () => {
-  try {
-    await guildStore.setWelcome(currentChannelId.value, welcomeMessage.value);
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-const disableWelcome = async () => {
-  try {
-    welcomeMessage.value = "";
-    currentChannelId.value = "";
-    await guildStore.setWelcome("", "");
-  } catch (err) {
-    console.log(err);
-  }
-};
+async function disableWelcome() {
+  welcomeMessage.value = "";
+  currentChannelId.value = "";
+  await guildStore.setWelcome("", "");
+}
 </script>
 
 <template>

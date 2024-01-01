@@ -1,18 +1,10 @@
 <script setup>
-import { ref, watch } from "vue";
+import { computed } from "vue";
 import { useGuildStore } from "@/stores/guild";
 import { getGuildIconURL } from "@/utils/helpers";
 
 const guildStore = useGuildStore();
-
-const currentGuild = ref({});
-currentGuild.value = guildStore.getGuild;
-watch(
-  () => guildStore.getGuild,
-  () => {
-    currentGuild.value = guildStore.getGuild;
-  }
-);
+const currentGuild = computed(() => guildStore.getGuild);
 </script>
 
 <template>
